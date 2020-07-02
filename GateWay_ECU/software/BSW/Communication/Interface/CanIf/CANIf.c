@@ -1,10 +1,12 @@
 
-#include "bl_CAN.h"
+#include "CANIf.h"
 #include "hw_can.h"
 #include "can_driver.h"
+#include "Can_Cfg.h"
 
 
-
+extern tCANConfigTXMsgObj CANConfigTXMsgObj[CAN_TX_MESSAGES_NUM] ;
+extern tCANConfigRXMsgObj CANConfigRXMsgObj[CAN_RX_MESSAGES_NUM] ;
 
 /*****************************************************************************************/
 /*                           Local functions Definitions                                 */
@@ -28,24 +30,29 @@ void Delay(uint32_t val);
 /****************************************************************************************/
 void Can_Init(void) 
 { 
+    uint32_t count = 0 ;
 
-	/* Init GPIO PORT*/
+    /* Init GPIO PORT*/
 	GPIO_Init(Port_B);
 	/* Init CAN controller with non loopBack mode*/
 	CANInit(CANx_BASE, Real_Mode);
 
 	/* Set BitRate*/
-	tCANBitClkParms BitTime ={10,2,13,2}  ;
+	tCANBitClkParms BitTime ={10,2,13,2}  ; /*500Kbps 80MHz*/
 	tCANBitClkParms *PBitTime = &BitTime ;		
-	CANBitTimingSet (CANx_BASE, PBitTime) ;	// 0x1443
+	CANBitTimingSet (CANx_BASE, PBitTime) ;
 
-	/*	Init Transmit message object*/
-	tCANConfigTXMsgObj msgT = {0x77,0};
-	CANTransmitMessageSet(CANx_BASE,HWOBJ_TRANSMIT_NUM, &msgT);
+	/*Initialize TX message objects*/
+	for(count =0 ;count <CAN_TX_MESSAGES_NUM; count++)
+	{
+	    CANTransmitMessageSet(CANx_BASE ,count+1 ,&CANConfigTXMsgObj[count]);
+	}
 
-	/*	Init Receive message object*/
-	tCANConfigRXMsgObj msgRR0 = {0x55,0x7FF, MSG_OBJ_USE_ID_FILTER};		
-	CANReceiveMessageSet(CANx_BASE, HWOBJ_RECEIVE_NUM, &msgRR0);
+    /*Initialize TX message objects*/
+    for(count =0 ;count <CAN_RX_MESSAGES_NUM; count++)
+    {
+        CANReceiveMessageSet(CANx_BASE ,count+1 ,&CANConfigRXMsgObj[count]);
+    }
 
 	/*	Start Bus */
 	CANEnable(CANx_BASE);
@@ -61,7 +68,7 @@ void Can_Init(void)
 /*    Return value            : none                                                    */
 /*    Notes                   :                                                         */
 /****************************************************************************************/
-void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr)
+void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr,uint8_t MessageNum)
 {
 	uint8_t ReceivedLength   = 0 ;	
 	/*Check parameters if reporting is availbale*/
@@ -72,7 +79,7 @@ void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr)
 		/*
 		 Check New data received
 		 */
-		 if(ReceiveOk(HWOBJ_RECEIVE_NUM,CANx_BASE))
+		 if(ReceiveOk(MessageNum,CANx_BASE))
 		 {	 
 				/*
 				 Set HW registers to read a messages data , length and ID
@@ -80,7 +87,7 @@ void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr)
 				HWREG(CANx_BASE + CAN_O_IF2CMSK) = (CAN_IF2CMSK_DATAA | CAN_IF1CMSK_DATAB |\
 																						CAN_IF2CMSK_CONTROL | CAN_IF1CMSK_MASK|\
 																						CAN_IF2CMSK_ARB);			 
-				HWREG(CANx_BASE + CAN_O_IF2CRQ)   =  HWOBJ_RECEIVE_NUM ;
+				HWREG(CANx_BASE + CAN_O_IF2CRQ)   =  MessageNum ;
 			 
 			 /*Read Received data Length*/
 				 ReceivedLength = HWREG(CANx_BASE + CAN_O_IF2MCTL) & CAN_IF2MCTL_DLC_M ;
@@ -91,7 +98,7 @@ void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr)
 			 /*Clear Receive Flag*/
 			  HWREG(CANx_BASE + CAN_O_IF2CMSK) = CAN_IF1CMSK_NEWDAT;
 				HWREG(CANx_BASE + CAN_O_STS) &=~CAN_STS_RXOK;               \
-				HWREG(CANx_BASE + CAN_O_IF2CRQ)   = HWOBJ_RECEIVE_NUM ;
+				HWREG(CANx_BASE + CAN_O_IF2CRQ)   = MessageNum ;
 		}
 	  else
 	  {
@@ -112,7 +119,7 @@ void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr)
 /*    Return value            : none                                                    */
 /*    Notes                   :                                                         */
 /****************************************************************************************/
-void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr)
+void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr ,uint8_t MessageNum)
 {
 	  /*flag used to indicate if we transmitted for the first time*/
 	  uint8_t FirstTransmitFlag = 0 ;
@@ -124,14 +131,14 @@ void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr)
 		while(size)
 		{
 			/*Check if transmit ok to transmit again or if it's the first transmit*/
-			if(TransmitOk(HWOBJ_TRANSMIT_NUM,CANx_BASE) ||FirstTransmitFlag == 0)
+			if(TransmitOk(MessageNum,CANx_BASE) ||FirstTransmitFlag == 0)
 			{
 			  Delay(100000);
 				if(size>= MAX_DATA_LENGTH)
 				{
 					/*Send 8 bytes of data*/
 					str_TransmitMessageInfo MessageInfo = {(uint8_t*)(DataPtr+StartByteNum),MAX_DATA_LENGTH} ;
-					CAN_Write(CANx_BASE,HWOBJ_TRANSMIT_NUM,&MessageInfo);
+					CAN_Write(CANx_BASE,MessageNum,&MessageInfo);
 					/*Set the first time tranmit flag*/
 				   FirstTransmitFlag = 1;
 					/*Decrement data size by 8*/
@@ -144,7 +151,7 @@ void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr)
 				{
 					/*Send remaining bytes of data*/
 					str_TransmitMessageInfo MessageInfo = {(uint8_t*)(DataPtr+StartByteNum),size} ;
-					CAN_Write(CANx_BASE,HWOBJ_TRANSMIT_NUM,&MessageInfo);
+					CAN_Write(CANx_BASE,MessageNum,&MessageInfo);
 					
 					/*make data size = 0*/
 					size = 0 ;

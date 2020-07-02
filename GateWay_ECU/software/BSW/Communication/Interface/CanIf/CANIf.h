@@ -29,6 +29,6 @@
 /*****************************************************************************************/
 
 void Can_Init(void) ;
-void CanReceiveBlocking_Function(uint16_t size, uint8_t* DataPtr);
-void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr);
+void CanReceiveBlocking_Function(uint16_t size, uint8_t*DataPtr,uint8_t MessageNum);
+void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr,uint8_t MessageNum);
 
