@@ -30,5 +30,15 @@
 			<type>2</type>
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/BSW</locationURI>
 		</link>
+		<link>
+			<name>RTE</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/RTE</locationURI>
+		</link>
+		<link>
+			<name>SW_C</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/SW_C</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
