@@ -1,0 +1,2 @@
+
+application startup must initialize RAM sections

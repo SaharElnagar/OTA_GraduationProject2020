@@ -1,3 +1,13 @@
+/*******************************************************************************
+**                                                                            **
+**  FILENAME             : CanIf.c                                            **
+**                                                                            **
+**  PLATFORM             : TIVA C                                             **
+**                                                                            **
+**  AUTHOR               : Nada Gamal , Yomna Mokhtar                         **
+**                                                                            **
+**                                                                            **
+*******************************************************************************/
 
 #include "CANIf.h"
 #include "hw_can.h"
@@ -17,7 +27,7 @@ _CANDataRegRead( uint8_t *pui8Data, uint32 *pui32Register, uint8_t ui32Size) ;
 /*****************************************************************************************/
 /*                           Functios Declaration                                        */
 /*****************************************************************************************/
-void Delay(uint32_t val);
+static void Delay(uint32_t );
 
 /****************************************************************************************/
 /*    Function Name           : Can_Init                                                */
@@ -133,7 +143,7 @@ void CanTransmitBlocking_Function(uint16_t size,const uint8_t*DataPtr ,uint8_t M
 			/*Check if transmit ok to transmit again or if it's the first transmit*/
 			if(TransmitOk(MessageNum,CANx_BASE) ||FirstTransmitFlag == 0)
 			{
-			  Delay(100000);
+			    Delay(10000);
 				if(size>= MAX_DATA_LENGTH)
 				{
 					/*Send 8 bytes of data*/
@@ -192,4 +202,12 @@ _CANDataRegRead( uint8_t *pui8Data, uint32 *pui32Register, uint8_t ui32Size)
 }
 
 
+
+static void Delay(uint32_t ui32Count)
+{
+    uint32_t i;
+    for( i = 0 ;i<ui32Count;i++)
+    {
+    }
+}
 

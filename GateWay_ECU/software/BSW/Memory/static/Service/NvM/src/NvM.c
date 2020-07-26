@@ -1227,7 +1227,7 @@ static void NvM_MainFunction_ReadBlock(void)
          if(MemIf_Status != MEMIF_BUSY && EndJobStatus.EndJobSuccess == 0 && EndJobStatus.EndJobFailed ==0)
          {
              /*Read block data and CRC in Tempbuffer*/
-             rtn_val = MemIf_Read(DeviceId , BlockNumber , TempBuffer,Length) ;
+             rtn_val = MemIf_Read(DeviceId , BlockNumber , TempBuffer,Length+CRC_SIZE) ;
          }
          if(rtn_val == E_NOT_OK)
          {
@@ -2149,7 +2149,7 @@ static void NvM_MainFunction_ReadAll(void)
                         BlockNumber = (NvMBlockDescriptor[block_counter].NvMNvBlockBaseNumber <<\
                                                     NVM_DATASET_SELECTION_BITS ) ;
                         Length = NvMBlockDescriptor[block_counter].NvMNvBlockLength ;
-                        MemIf_Read(DeviceId , BlockNumber ,TempBuffer ,Length) ;
+                        MemIf_Read(DeviceId , BlockNumber ,TempBuffer ,Length+CRC_SIZE) ;
                     }
 
                      /*Read Job result*/

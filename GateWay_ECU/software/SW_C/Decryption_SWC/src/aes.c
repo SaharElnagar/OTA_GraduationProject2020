@@ -1,16 +1,13 @@
-/*
- *
- * Chinese Academy of Sciences
- * State Key Laboratory of Information Security
- * Institute of Information Engineering
- *
- * Copyright (C) 2016 Chinese Academy of Sciences
- *
- * LuoPeng, luopeng@iie.ac.cn
- * Updated in Oct 2016
- * Updated in Jan 2017, update muliple function on GF(2^8).
- *
- */
+/**************************************************************************/
+/*                                                                        */
+/* File : aes.c                                                           */
+/*                                                                        */
+/* Date : 29 March 2020                                                   */
+/*                                                                        */
+/* Author : Belal Elmahdy                                                 */
+/*                                                                        */
+/**************************************************************************/
+
 #include <stdint.h>
 #include <stdio.h>
 

@@ -1,3 +1,14 @@
+/*******************************************************************************
+**                                                                            **
+**  FILENAME             : can_driver.c                                       **
+**                                                                            **
+**  PLATFORM             : TIVA C                                             **
+**                                                                            **
+**  AUTHOR               : Nada Gamal , Yomna Mokhtar                         **
+**                                                                            **
+**                                                                            **
+*******************************************************************************/
+
 #include "can_driver.h"
 #include "CAN_HW_TYPES.h"
 #include "tm4c123gh6pm.h"

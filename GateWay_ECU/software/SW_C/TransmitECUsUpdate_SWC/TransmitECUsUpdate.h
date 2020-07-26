@@ -10,6 +10,9 @@
 
 
 
+void Init_TransmitECUsUpdate(void) ;
+void TransmitECUsUpdate_MainFunction(void);
+
 
 
 #endif /* BSW_SW_C_TRANSMITECUSUPDATE_SWC_TRANSMITECUSUPDATE_H_ */

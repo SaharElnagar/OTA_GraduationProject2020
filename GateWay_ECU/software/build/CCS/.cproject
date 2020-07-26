@@ -55,6 +55,7 @@
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../BSW/Memory/stub"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../BSW/Memory/gen"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../SW_C/TransmitECUsUpdate_SWC"/>
+									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../SW_C/StoreUpdate_SWC"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../SW_C/Decryption_SWC/inc"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../SW_C/DownloadUpdate_SWC/inc"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}../../../RTE/inc"/>

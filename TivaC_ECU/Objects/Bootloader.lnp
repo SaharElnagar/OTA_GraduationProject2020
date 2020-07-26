@@ -1,0 +1,11 @@
+--cpu=Cortex-M4.fp
+".\objects\bl_flash.o"
+".\objects\bl_main.o"
+".\objects\bl_uart.o"
+".\objects\packet.o"
+".\objects\sysctl.o"
+".\objects\startup.o"
+--strict --scatter ".\new_scatter.sct"
+--entry Reset_Handler --first __Vectors --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Bootloader.map" -o .\Objects\Bootloader.axf

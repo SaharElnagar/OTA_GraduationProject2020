@@ -76,33 +76,34 @@ Std_ReturnType FindValidBlocks(uint16 BlockNumber)
          if( BlockStatus == VALID_BLOCK)
          {
              /*Get current block index*/
-              GetIndexFromBlockNum(BlockNum,&index);
+              if(GetIndexFromBlockNum(BlockNum,&index)== E_OK)
+              {
+                  /*1-Save block number */
+                 ActiveSectorInfo.SectorValidBlocksInfo[index].LogicalAddress = BlockNum ;
 
-             /*1-Save block number */
-             ActiveSectorInfo.SectorValidBlocksInfo[index].LogicalAddress = BlockNum ;
+                 /*2-Save Physical Address*/
+                 ActiveSectorInfo.SectorValidBlocksInfo[index].PhsicalAddressStart = NextBlockAddress ;
 
-             /*2-Save Physical Address*/
-             ActiveSectorInfo.SectorValidBlocksInfo[index].PhsicalAddressStart = NextBlockAddress ;
+                 /*3-Increment Active Blocks counter*/
+                 if(ActiveSectorInfo.SectorValidBlocksInfo[index].Valid != TRUE)
+                  ActiveSectorInfo.ValidBlocksNumber++;
 
-             /*3-Increment Active Blocks counter*/
-             if(ActiveSectorInfo.SectorValidBlocksInfo[index].Valid != TRUE)
-              ActiveSectorInfo.ValidBlocksNumber++;
+                 /*4-Save block size*/
+                 ActiveSectorInfo.SectorValidBlocksInfo[index].BlockSize = BlockSize ;
 
-             /*4-Save block size*/
-             ActiveSectorInfo.SectorValidBlocksInfo[index].BlockSize = BlockSize ;
+                 /*5-Set block valid flag*/
+                 ActiveSectorInfo.SectorValidBlocksInfo[index].Valid = TRUE;
 
-             /*5-Set block valid flag*/
-             ActiveSectorInfo.SectorValidBlocksInfo[index].Valid = TRUE;
+                 /*6-Save block address as it's the last valid block found in this sector*/
+                 ActiveSectorInfo.LastValidBlock = NextBlockAddress ;
 
-             /*6-Save block address as it's the last valid block found in this sector*/
-             ActiveSectorInfo.LastValidBlock = NextBlockAddress ;
-
-             /*check if it's the required block */
-             if(BlockNum == BlockNumber )
-             {
-                 /*return found block*/
-                 rtn_val2 = E_OK ;
-             }
+                 /*check if it's the required block */
+                 if(BlockNum == BlockNumber )
+                 {
+                     /*return found block*/
+                     rtn_val2 = E_OK ;
+                 }
+              }
          }
 
         /*Check if we reached the end of the LinkedList and block not found
@@ -193,26 +194,27 @@ Std_ReturnType SearchSectorValidBlocks(uint32 SectorAddress)
              if( BlockStatus == VALID_BLOCK)
              {
                  /*Get current block index*/
-                  GetIndexFromBlockNum(BlockNum,&index);
+                  if(GetIndexFromBlockNum(BlockNum,&index)== E_OK)
+                  {
+                     /*1-Save block number */
+                     ActiveSectorInfo.SectorValidBlocksInfo[index].LogicalAddress = BlockNum ;
 
-                 /*1-Save block number */
-                 ActiveSectorInfo.SectorValidBlocksInfo[index].LogicalAddress = BlockNum ;
+                     /*2-Save Physical Address*/
+                     ActiveSectorInfo.SectorValidBlocksInfo[index].PhsicalAddressStart = NextBlockAddress ;
 
-                 /*2-Save Physical Address*/
-                 ActiveSectorInfo.SectorValidBlocksInfo[index].PhsicalAddressStart = NextBlockAddress ;
+                     /*3-Increment Active Blocks counter*/
+                     if(ActiveSectorInfo.SectorValidBlocksInfo[index].Valid != TRUE)
+                      ActiveSectorInfo.ValidBlocksNumber++ ;
 
-                 /*3-Increment Active Blocks counter*/
-                 if(ActiveSectorInfo.SectorValidBlocksInfo[index].Valid != TRUE)
-                  ActiveSectorInfo.ValidBlocksNumber++ ;
+                     /*4-Save block size*/
+                     ActiveSectorInfo.SectorValidBlocksInfo[index].BlockSize = BlockSize ;
 
-                 /*4-Save block size*/
-                 ActiveSectorInfo.SectorValidBlocksInfo[index].BlockSize = BlockSize ;
+                     /*5-Set block valid flag*/
+                     ActiveSectorInfo.SectorValidBlocksInfo[index].Valid = TRUE;
 
-                 /*5-Set block valid flag*/
-                 ActiveSectorInfo.SectorValidBlocksInfo[index].Valid = TRUE;
-
-                 /*6-Save block address as it's the last valid block found in this sector*/
-                  ActiveSectorInfo.LastValidBlock = NextBlockAddress ;
+                     /*6-Save block address as it's the last valid block found in this sector*/
+                      ActiveSectorInfo.LastValidBlock = NextBlockAddress ;
+                  }
              }
 
              /*check if it's last block in the sector */
@@ -231,7 +233,7 @@ Std_ReturnType SearchSectorValidBlocks(uint32 SectorAddress)
                  {
                      /*Found active blocks , so it's not the first block in sector*/
                      ActiveSectorInfo.InternalNextAvailableAddress = NextBlockAddress+\
-                     Fee_BlockConfig[index].FeeBlockSize + DATA_BLOCK_HEADER_SIZE ;
+                     BlockSize + DATA_BLOCK_HEADER_SIZE ;
                  }
                  /*first block in sector*/
                  else

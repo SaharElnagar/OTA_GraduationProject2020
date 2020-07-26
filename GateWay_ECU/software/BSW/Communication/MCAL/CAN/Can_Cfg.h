@@ -11,11 +11,12 @@
 #define CAN_TX_MESSAGES_NUM                    (4U)
 #define CAN_RX_MESSAGES_NUM                    (3U)
 
+/*Message object number*/
 #define TIVA_NODE_REQUEST_MESSAGE           (1U)
 #define TIVA_NODE_UPDATE_MESSAGE            (2U)
 #define STM_NODE_UPDATE_MESSAGE             (3U)
 #define LCD_MESSAGE                         (4U)
-
+/*Message ID ARB*/
 #define TIVA_NODE_REQUEST_TX_ID             (2U)
 #define TIVA_NODE_UPDATE_MESSAGE_TX_ID      (3U)
 #define TIVA_NODE_UPDATE_MESSAGE_RX_ID      (4U)

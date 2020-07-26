@@ -1,0 +1,24 @@
+Dependencies for Project 'gateway', Target 'Target 1': (DO NOT MODIFY !)
+F (.\bl_CAN.c)(0x5E6FD644)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\bl_can.o --omf_browse .\bl_can.crf --depend .\bl_can.d)
+I (bl_CAN.h)(0x5E6657A3)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (hw_can.h)(0x5E63BE02)
+I (can_driver.h)(0x5E66B5A3)
+I (common.h)(0x5E650EE5)
+I (CAN_PORT.h)(0x5E650C83)
+I (bl_config.h)(0x5E6657A3)
+F (.\can_driver.c)(0x5E66B854)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\can_driver.o --omf_browse .\can_driver.crf --depend .\can_driver.d)
+I (can_driver.h)(0x5E66B5A3)
+I (common.h)(0x5E650EE5)
+I (CAN_PORT.h)(0x5E650C83)
+I (CAN_HW_TYPES.h)(0x5E651107)
+I (tm4c123gh6pm.h)(0x5DDD353B)
+F (.\GW_main.c)(0x5E70C7CB)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\gw_main.o --omf_browse .\gw_main.crf --depend .\gw_main.d)
+I (Packet.h)(0x5E70C7CB)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (bl_CAN.h)(0x5E6657A3)
+I (tm4c123gh6pm.h)(0x5DDD353B)
+I (sysctl.h)(0x5E70BD0E)
+F (.\sysctl.c)(0x5E70BD0E)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\sysctl.o --omf_browse .\sysctl.crf --depend .\sysctl.d)
+I (sysctl.h)(0x5E70BD0E)
+F (.\RTE\Device\TM4C123GH6PM\startup_TM4C123.s)(0x5E70BDEF)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 523" --pd "TM4C123GH6PM SETA 1"--list .\startup_tm4c123.lst --xref -o .\startup_tm4c123.o --depend .\startup_tm4c123.d)

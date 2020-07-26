@@ -56,7 +56,7 @@
 //*****************************************************************************
 //  Flash Size
 //*****************************************************************************
-#define FLASH_SIZE                      0x2000          /*used space for blocks allocation in flash = 64KB*/
+#define FLASH_SIZE                      0x3000          /*used space for blocks allocation in flash = 64KB*/
 #define ERASED_HALF_WORD                0xFFFF
 #define ERASED_WORD                     0xFFFFFFFF
 //*****************************************************************************

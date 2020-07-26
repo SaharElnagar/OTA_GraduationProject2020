@@ -49,7 +49,6 @@ static VariableState NewDecrypted_ProtFlg = IDLE ;
 static VariableState DecryptionKey_ProtFlg = IDLE ;
 static VariableState KeyChanged_ProtFlg = IDLE ;
 
-
 /**************************************************************************/
 /*                     Rte_NewUpdateRequest                               */
 /**************************************************************************/
@@ -59,8 +58,9 @@ Std_ReturnType Rte_Write_NewUpdateRequest( boolean val )
     if(NewUpdate_ProtFlg != BUSY)
     {
         NewUpdate_ProtFlg = BUSY ;
+
         Rte_NewUpdateRequest = val ;
-        NewUpdate_ProtFlg = IDLE ;
+       // NewUpdate_ProtFlg = IDLE ;  /*it should be back to idle  after reading */
         Return_Value = E_OK ;
     }
     else
@@ -70,19 +70,19 @@ Std_ReturnType Rte_Write_NewUpdateRequest( boolean val )
     return Return_Value ;
 }
 /**************************************************************************/
-Std_ReturnType Rte_Read_NewUpdateRequest( boolean* var )
+void Rte_Read_NewUpdateRequest( boolean* var )
 {
-    Std_ReturnType Return_Value ;
-    if(NewUpdate_ProtFlg != BUSY)
+    /*transmit the flag value to the caller*/
+    *var = Rte_NewUpdateRequest ;
+
+    /*Reset flag if it's true*/
+    if(Rte_NewUpdateRequest == TRUE)
     {
-        *var = Rte_NewUpdateRequest ;
-        Return_Value = E_OK ;
+        Rte_NewUpdateRequest = FALSE ;
+
+        /*Set port flag to idle*/
+        NewUpdate_ProtFlg = IDLE ;
     }
-    else
-    {
-        Return_Value = E_NOT_OK ;
-    }
-    return Return_Value ;
 }
 
 /**************************************************************************/
@@ -125,14 +125,14 @@ Std_ReturnType Rte_Read_EncryptedBuffer( uint8** BufferAddress )
 /**************************************************************************/
 /*                       Rte_UpdateRequestAccepted                        */
 /**************************************************************************/
-Std_ReturnType Rte_Write_UpdateRequestAccepted( Std_ReturnType val )
+Std_ReturnType Rte_Write_UpdateRequestAccepted( boolean val )
 {
     Std_ReturnType Return_Value ;
     if(UpdateReqAccepted_ProtFlg != BUSY)
     {
         UpdateReqAccepted_ProtFlg = BUSY ;
         Rte_UpdateRequestAccepted = val ;
-        UpdateReqAccepted_ProtFlg = IDLE ;
+       // UpdateReqAccepted_ProtFlg = IDLE ;
         Return_Value = E_OK ;
     }
     else
@@ -142,19 +142,14 @@ Std_ReturnType Rte_Write_UpdateRequestAccepted( Std_ReturnType val )
     return Return_Value ;
 }
 /**************************************************************************/
-Std_ReturnType Rte_Read_UpdateRequestAccepted( Std_ReturnType* var )
+void Rte_Read_UpdateRequestAccepted( boolean* var )
 {
-    Std_ReturnType Return_Value ;
-    if(UpdateReqAccepted_ProtFlg != BUSY)
+    *var = Rte_UpdateRequestAccepted ;
+    if(Rte_UpdateRequestAccepted == TRUE)
     {
-        *var = Rte_UpdateRequestAccepted ;
-        Return_Value = E_OK ;
+        Rte_UpdateRequestAccepted = FALSE;
+        UpdateReqAccepted_ProtFlg = IDLE ;
     }
-    else
-    {
-        Return_Value = E_NOT_OK ;
-    }
-    return Return_Value ;
 }
 
 /**************************************************************************/
@@ -202,7 +197,6 @@ Std_ReturnType Rte_Write_DoneDownloading( boolean val )
     {
         DoneDownloading_ProtFlg = BUSY ;
         Rte_DoneDownloading = val ;
-        DoneDownloading_ProtFlg = IDLE ;
         Return_Value = E_OK ;
     }
     else
@@ -212,19 +206,14 @@ Std_ReturnType Rte_Write_DoneDownloading( boolean val )
     return Return_Value ;
 }
 /**************************************************************************/
-Std_ReturnType Rte_Read_DoneDownloading( boolean* var )
+void Rte_Read_DoneDownloading( boolean* var )
 {
-    Std_ReturnType Return_Value ;
-    if(DoneDownloading_ProtFlg != BUSY)
+    *var = Rte_DoneDownloading ;
+    if(Rte_DoneDownloading== TRUE)
     {
-        *var = Rte_DoneDownloading ;
-        Return_Value = E_OK ;
+        Rte_DoneDownloading = FALSE ;
+        DoneDownloading_ProtFlg = IDLE ;
     }
-    else
-    {
-        Return_Value = E_NOT_OK ;
-    }
-    return Return_Value ;
 }
 
 /**************************************************************************/
@@ -237,7 +226,6 @@ Std_ReturnType Rte_Write_NewEncryptedDataFlg( boolean val )
     {
         NewEncrypted_ProtFlg = BUSY ;
         Rte_NewEncryptedDataFlg = val ;
-        NewEncrypted_ProtFlg = IDLE ;
         Return_Value = E_OK ;
     }
     else
@@ -247,19 +235,15 @@ Std_ReturnType Rte_Write_NewEncryptedDataFlg( boolean val )
     return Return_Value ;
 }
 /**************************************************************************/
-Std_ReturnType Rte_Read_NewEncryptedDataFlg( boolean* var )
+void Rte_Read_NewEncryptedDataFlg( boolean* var )
 {
-    Std_ReturnType Return_Value ;
-    if(NewEncrypted_ProtFlg != BUSY)
+
+    *var = Rte_NewEncryptedDataFlg ;
+    if(Rte_NewEncryptedDataFlg == TRUE)
     {
-        *var = Rte_NewEncryptedDataFlg ;
-        Return_Value = E_OK ;
+        Rte_NewEncryptedDataFlg = FALSE;
+        NewEncrypted_ProtFlg = IDLE ;
     }
-    else
-    {
-        Return_Value = E_NOT_OK ;
-    }
-    return Return_Value ;
 }
 
 /**************************************************************************/
@@ -438,11 +422,6 @@ Std_ReturnType Rte_Read_KeyChanged( boolean *var )
     }
     return Return_Value ;
 }
-
-
-
-
-
 
 
 

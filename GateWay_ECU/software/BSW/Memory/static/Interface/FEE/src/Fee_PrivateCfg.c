@@ -67,18 +67,4 @@ Fee_BlockConfigType Fee_BlockConfig[BLOCKS_NUM] =
         BLOCK_8_SIZE  ,
         BLOCK_1_WRITE_CYCLES
         }
-        ,
-
-        {
-        BLOCK_9_NUMBER,
-        BLOCK_9_SIZE  ,
-        BLOCK_1_WRITE_CYCLES
-        }
-        ,
-
-        {
-        BLOCK_10_NUMBER,
-        BLOCK_10_SIZE  ,
-        BLOCK_1_WRITE_CYCLES
-        }
 } ;

@@ -119,12 +119,12 @@
  */
 #define NvMMultiBlockCallback               STD_OFF
 
-#define MAX_NVM_BLOCK_SIZE                  (100U)
+#define MAX_NVM_BLOCK_SIZE                  (1028U)
 /*****************************************************************************************/
 /*                                 NvMBlockDescriptor                                    */
 /*****************************************************************************************/
 
-#define NUMBER_OF_NVM_BLOCKS                (5U)
+#define NUMBER_OF_NVM_BLOCKS                (11U)
 
 #define CRC_SIZE                            (4U)
 /*ECUC_NvM_00481
@@ -137,20 +137,48 @@
 
 /***************************BLOCK_2 CFG********************************/
 #define NVM_NVRAM_BLOCK_2_ID                (2U)
-#define NVM_NVRAM_BLOCK_2_BASENUMBER        (BLOCK_4_NUMBER>>NVM_DATASET_SELECTION_BITS)
-#define NVM_NVRAM_BLOCK_2_LENGTH            (BLOCK_1_SIZE-4)
+#define NVM_NVRAM_BLOCK_2_BASENUMBER        (EA_BLOCK_0_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_2_LENGTH            (EA_BLOCK_0_SIZE-CRC_SIZE)
 
 /***************************BLOCK_3 CFG********************************/
 #define NVM_NVRAM_BLOCK_3_ID                (3U)
-#define NVM_NVRAM_BLOCK_3_BASENUMBER        (BLOCK_2_NUMBER>>NVM_DATASET_SELECTION_BITS)
-#define NVM_NVRAM_BLOCK_3_LENGTH            (BLOCK_2_SIZE-4)
+#define NVM_NVRAM_BLOCK_3_BASENUMBER        (BLOCK_1_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_3_LENGTH            (BLOCK_1_SIZE-CRC_SIZE)
 
 /***************************BLOCK_4 CFG********************************/
 #define NVM_NVRAM_BLOCK_4_ID                (4U)
-#define NVM_NVRAM_BLOCK_4_BASENUMBER        (BLOCK_9_NUMBER>>NVM_DATASET_SELECTION_BITS)
-#define NVM_NVRAM_BLOCK_4_LENGTH            (BLOCK_9_SIZE-4)
+#define NVM_NVRAM_BLOCK_4_BASENUMBER        (BLOCK_3_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_4_LENGTH            (BLOCK_3_SIZE-CRC_SIZE)
 
+/***************************BLOCK_5 CFG********************************/
+#define NVM_NVRAM_BLOCK_5_ID                (5U)
+#define NVM_NVRAM_BLOCK_5_BASENUMBER        (BLOCK_4_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_5_LENGTH            (BLOCK_4_SIZE-CRC_SIZE)
 
-#define MAX_NVM_BLOCK_SIZE                  (100U)
+/***************************BLOCK_6 CFG********************************/
+#define NVM_NVRAM_BLOCK_6_ID                (6U)
+#define NVM_NVRAM_BLOCK_6_BASENUMBER        (BLOCK_5_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_6_LENGTH            (BLOCK_5_SIZE-CRC_SIZE)
+
+/***************************BLOCK_7 CFG********************************/
+#define NVM_NVRAM_BLOCK_7_ID                (7U)
+#define NVM_NVRAM_BLOCK_7_BASENUMBER        (BLOCK_6_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_7_LENGTH            (BLOCK_6_SIZE-CRC_SIZE)
+
+/***************************BLOCK_8 CFG********************************/
+#define NVM_NVRAM_BLOCK_8_ID                (8U)
+#define NVM_NVRAM_BLOCK_8_BASENUMBER        (BLOCK_7_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_8_LENGTH            (BLOCK_7_SIZE-CRC_SIZE)
+
+/***************************BLOCK_9 CFG********************************/
+#define NVM_NVRAM_BLOCK_9_ID                (9U)
+#define NVM_NVRAM_BLOCK_9_BASENUMBER        (BLOCK_8_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_9_LENGTH            (BLOCK_8_SIZE-CRC_SIZE)
+
+/***************************BLOCK_10 CFG********************************/
+#define NVM_NVRAM_BLOCK_10_ID                (10U)
+#define NVM_NVRAM_BLOCK_10_BASENUMBER        (BLOCK_2_NUMBER>>NVM_DATASET_SELECTION_BITS)
+#define NVM_NVRAM_BLOCK_10_LENGTH            (BLOCK_2_SIZE-CRC_SIZE)
+
 
 #endif /* BSW_GEN_NVM_CFG_H_ */

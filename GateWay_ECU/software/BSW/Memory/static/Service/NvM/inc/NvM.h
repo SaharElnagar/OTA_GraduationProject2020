@@ -69,5 +69,5 @@ Std_ReturnType NvM_ReadBlock( NvM_BlockIdType BlockId, void* NvM_DstPtr ) ;
 Std_ReturnType NvM_InvalidateNvBlock( NvM_BlockIdType BlockId ) ;
 void NvM_WriteAll( void ) ;
 void NvM_MainFunction( void ) ;
-
+Std_ReturnType NvM_GetErrorStatus( NvM_BlockIdType BlockId, NvM_RequestResultType* RequestResultPtr) ;
 #endif /* BSW_STATIC_SERVICE_NVM_INC_NVM_H_ */

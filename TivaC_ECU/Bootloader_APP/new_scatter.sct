@@ -1,0 +1,25 @@
+
+
+FLASH 0x00000000 0x00010000
+{
+    ;
+    ; Specify the Execution Address of the code and the size.
+    ;
+    RESET 0x00000000 0x00010000
+    {
+        *.o (RESET, +First)
+        * (+RO)
+    }
+    ;
+    ; Place everything else remaining into SRAM (RW, and ZI)
+    ;
+    SRAM +0x20000000 0x00007000
+    {
+        * (+RW, +ZI)
+    }
+    FLASH_MIRROR 0x20007400 0x00000400
+    {
+        *.o (FLASH_MIRROR )
+    }
+
+}

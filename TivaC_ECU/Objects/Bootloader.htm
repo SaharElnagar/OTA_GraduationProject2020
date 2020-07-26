@@ -1,0 +1,197 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<title>Static Call Graph - [.\Objects\Bootloader.axf]</title></head>
+<body><HR>
+<H1>Static Call Graph for image .\Objects\Bootloader.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Sun Sep 22 00:25:52 2019
+<BR><P>
+<H3>Maximum Stack Usage =         20 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+Call chain for Maximum Stack Depth:</H3>
+Reset_Handler_In_SRAM &rArr; main &rArr; Updater &rArr; BLInternalFlashProgram
+<P>
+<H3>
+Functions with no stack information
+</H3><UL>
+ <LI><a href="#[7]">ProcessorInit</a>
+ <LI><a href="#[8]">__Vectors_End</a>
+ <LI><a href="#[6]">Reset_Handler</a>
+ <LI><a href="#[18]">StartApplication</a>
+ <LI><a href="#[a]">Delay</a>
+ <LI><a href="#[19]">DisableInterrupts</a>
+ <LI><a href="#[15]">EnableInterrupts</a>
+ <LI><a href="#[5]">Reset_Handler_In_SRAM</a>
+ <LI><a href="#[3]">IntDefaultHandler</a>
+ <LI><a href="#[1]">NMI_Handler</a>
+ <LI><a href="#[2]">HardFault_Handler</a>
+</UL>
+</UL>
+<P>
+<H3>
+Mutually Recursive functions
+</H3> <LI><a href="#[3]">IntDefaultHandler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3]">IntDefaultHandler</a><BR>
+ <LI><a href="#[1]">NMI_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1]">NMI_Handler</a><BR>
+ <LI><a href="#[2]">HardFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[2]">HardFault_Handler</a><BR>
+</UL>
+<P>
+<H3>
+Function Pointers
+</H3><UL>
+ <LI><a href="#[2]">HardFault_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
+ <LI><a href="#[3]">IntDefaultHandler</a> from startup.o(.text) referenced 114 times from startup.o(RESET)
+ <LI><a href="#[1]">NMI_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
+ <LI><a href="#[6]">Reset_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
+ <LI><a href="#[5]">Reset_Handler_In_SRAM</a> from startup.o(.text) referenced from startup.o(RESET)
+ <LI><a href="#[4]">UART0_Handler</a> from bl_uart.o(i.UART0_Handler) referenced from startup.o(RESET)
+</UL>
+<P>
+<H3>
+Global Symbols
+</H3>
+<P><STRONG><a name="[7]"></a>ProcessorInit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Called By]<UL><LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+</UL>
+
+<P><STRONG><a name="[8]"></a>__Vectors_End</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(RESET), UNUSED, KEPT)
+
+<P><STRONG><a name="[6]"></a>Reset_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ProcessorInit
+</UL>
+
+<P><STRONG><a name="[18]"></a>StartApplication</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[a]"></a>Delay</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
+</UL>
+
+<P><STRONG><a name="[19]"></a>DisableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+
+<P><STRONG><a name="[15]"></a>EnableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[12]"></a>BLInternalFlashErase</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, bl_flash.o(i.BLInternalFlashErase))
+<BR><BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Updater
+</UL>
+
+<P><STRONG><a name="[13]"></a>BLInternalFlashErrorCheck</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, bl_flash.o(i.BLInternalFlashErrorCheck))
+<BR><BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Updater
+</UL>
+
+<P><STRONG><a name="[14]"></a>BLInternalFlashProgram</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, bl_flash.o(i.BLInternalFlashProgram))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = BLInternalFlashProgram
+</UL>
+<BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Updater
+</UL>
+
+<P><STRONG><a name="[b]"></a>ConfigureDevice</STRONG> (Thumb, 224 bytes, Stack size 8 bytes, bl_main.o(i.ConfigureDevice))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ConfigureDevice
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[17]"></a>Flush_PacketBuffer</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, bl_main.o(i.Flush_PacketBuffer))
+<BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[c]"></a>PLL_Init</STRONG> (Thumb, 120 bytes, Stack size 0 bytes, sysctl.o(i.PLL_Init))
+<BR><BR>[Called By]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ConfigureDevice
+</UL>
+
+<P><STRONG><a name="[d]"></a>Read_Update_notification_Request</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, bl_main.o(i.Read_Update_notification_Request))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Read_Update_notification_Request
+</UL>
+<BR>[Calls]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;write_update_notification_Request
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[4]"></a>UART0_Handler</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, bl_uart.o(i.UART0_Handler))
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[10]"></a>UARTFlush</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, bl_uart.o(i.UARTFlush))
+<BR><BR>[Called By]<UL><LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTSend
+</UL>
+
+<P><STRONG><a name="[16]"></a>UARTReceive</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, bl_uart.o(i.UARTReceive))
+<BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[f]"></a>UARTSend</STRONG> (Thumb, 42 bytes, Stack size 4 bytes, bl_uart.o(i.UARTSend))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = UARTSend
+</UL>
+<BR>[Calls]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTFlush
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[11]"></a>Updater</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, bl_main.o(i.Updater))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = Updater &rArr; BLInternalFlashProgram
+</UL>
+<BR>[Calls]<UL><LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BLInternalFlashProgram
+<LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BLInternalFlashErrorCheck
+<LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BLInternalFlashErase
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[9]"></a>main</STRONG> (Thumb, 202 bytes, Stack size 0 bytes, bl_main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20 + Unknown Stack Size
+<LI>Call Chain = main &rArr; Updater &rArr; BLInternalFlashProgram
+</UL>
+<BR>[Calls]<UL><LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTSend
+<LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTReceive
+<LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartApplication
+<LI><a href="#[15]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableInterrupts
+<LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Updater
+<LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Update_notification_Request
+<LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flush_PacketBuffer
+<LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ConfigureDevice
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler_In_SRAM
+</UL>
+
+<P><STRONG><a name="[e]"></a>write_update_notification_Request</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, bl_uart.o(i.write_update_notification_Request))
+<BR><BR>[Called By]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Update_notification_Request
+</UL>
+<P>
+<H3>
+Local Symbols
+</H3>
+<P><STRONG><a name="[5]"></a>Reset_Handler_In_SRAM</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20 + Unknown Stack Size
+<LI>Call Chain = Reset_Handler_In_SRAM &rArr; main &rArr; Updater &rArr; BLInternalFlashProgram
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[3]"></a>IntDefaultHandler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IntDefaultHandler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IntDefaultHandler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[1]"></a>NMI_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NMI_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NMI_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[2]"></a>HardFault_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HardFault_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HardFault_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL><P>
+<H3>
+Undefined Global Symbols
+</H3><HR></body></html>

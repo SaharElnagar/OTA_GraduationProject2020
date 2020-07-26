@@ -1,0 +1,24 @@
+Dependencies for Project 'gateway', Target 'Target 1': (DO NOT MODIFY !)
+F (.\startup_TM4C123.s)(0x5E71240E)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123--list .\startup_tm4c123.lst --xref -o .\startup_tm4c123.o --depend .\startup_tm4c123.d)
+F (.\bl_CAN.c)(0x5E713085)(--c99 -c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\bl_can.o --omf_browse .\bl_can.crf --depend .\bl_can.d)
+I (bl_CAN.h)(0x5E6657A4)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (hw_can.h)(0x5E63BE04)
+I (can_driver.h)(0x5E66B5A4)
+I (common.h)(0x5E650EE6)
+I (CAN_PORT.h)(0x5E650C84)
+I (bl_config.h)(0x5E6657A4)
+F (.\can_driver.c)(0x5E66B856)(--c99 -c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\can_driver.o --omf_browse .\can_driver.crf --depend .\can_driver.d)
+I (can_driver.h)(0x5E66B5A4)
+I (common.h)(0x5E650EE6)
+I (CAN_PORT.h)(0x5E650C84)
+I (CAN_HW_TYPES.h)(0x5E651108)
+I (tm4c123gh6pm.h)(0x5DDD353C)
+F (.\GW_main.c)(0x5E71218F)(--c99 -c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\gw_main.o --omf_browse .\gw_main.crf --depend .\gw_main.d)
+I (Packet.h)(0x5E7120DE)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (bl_CAN.h)(0x5E6657A4)
+I (tm4c123gh6pm.h)(0x5DDD353C)
+I (sysctl.h)(0x5E70BD10)
+F (.\sysctl.c)(0x5E70BD10)(--c99 -c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\sysctl.o --omf_browse .\sysctl.crf --depend .\sysctl.d)
+I (sysctl.h)(0x5E70BD10)

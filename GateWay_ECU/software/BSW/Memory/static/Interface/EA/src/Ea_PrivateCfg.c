@@ -16,10 +16,5 @@ Ea_BlockConfigType Ea_BlockSConfig[EA_BLOCKS_NUM] =
           .BlockNumber              = EA_BLOCK_0_NUMBER     ,
           .PhysicalStartAddress     = 0                     ,   /*Initialized in init function*/
           .BlockSize                = EA_BLOCK_0_SIZE       ,
-     },
-     {
-          .BlockNumber              = EA_BLOCK_1_NUMBER     ,
-          .PhysicalStartAddress     = 0                     ,   /*Initialized in init function*/
-          .BlockSize                = EA_BLOCK_1_SIZE       ,
      }
 };

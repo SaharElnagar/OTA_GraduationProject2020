@@ -1,0 +1,39 @@
+Dependencies for Project 'gateway', Target 'Target 1': (DO NOT MODIFY !)
+F (.\GW_main.c)(0x5E70126B)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="523" -D_RTE_ -DTM4C123GH6PM-o .\objects\gw_main.o --omf_browse .\objects\gw_main.crf --depend .\objects\gw_main.d)
+I (Packet.h)(0x5E70126B)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (bl_CAN.h)(0x5E6657A3)
+I (tm4c123gh6pm.h)(0x5DDD353B)
+I (sysctl.h)(0x5D7A453C)
+F (.\bl_CAN.c)(0x5E6FD644)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="523" -D_RTE_ -DTM4C123GH6PM-o .\objects\bl_can.o --omf_browse .\objects\bl_can.crf --depend .\objects\bl_can.d)
+I (bl_CAN.h)(0x5E6657A3)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (hw_can.h)(0x5E63BE02)
+I (can_driver.h)(0x5E66B5A3)
+I (common.h)(0x5E650EE5)
+I (CAN_PORT.h)(0x5E650C83)
+I (bl_config.h)(0x5E6657A3)
+F (.\can_driver.c)(0x5E66B854)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="523" -D_RTE_ -DTM4C123GH6PM-o .\objects\can_driver.o --omf_browse .\objects\can_driver.crf --depend .\objects\can_driver.d)
+I (can_driver.h)(0x5E66B5A3)
+I (common.h)(0x5E650EE5)
+I (CAN_PORT.h)(0x5E650C83)
+I (CAN_HW_TYPES.h)(0x5E651107)
+I (tm4c123gh6pm.h)(0x5DDD353B)
+F (.\bl_CAN.h)(0x5E6657A3)()
+F (.\CAN_HW_TYPES.h)(0x5E651107)()
+F (.\CAN_PORT.h)(0x5E650C83)()
+F (.\common.h)(0x5E650EE5)()
+F (.\hw_can.h)(0x5E63BE02)()
+F (.\can_driver.h)(0x5E66B5A3)()
+F (.\Packet.h)(0x5E70126B)()
+F (RTE\Device\TM4C123GH6PM\startup_TM4C123.s)(0x5E70126B)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123--pd "__UVISION_VERSION SETA 523" --pd "_RTE_ SETA 1" --pd "TM4C123GH6PM SETA 1"--list .\listings\startup_tm4c123.lst --xref -o .\objects\startup_tm4c123.o --depend .\objects\startup_tm4c123.d)
+F (RTE\Device\TM4C123GH6PM\system_TM4C123.c)(0x550A65DA)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="523" -D_RTE_ -DTM4C123GH6PM-o .\objects\system_tm4c123.o --omf_browse .\objects\system_tm4c123.crf --depend .\objects\system_tm4c123.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123.h)(0x530EF2F6)
+I (C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x550FE22C)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FA234)
+I (C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\system_TM4C123.h)(0x51B6E406)

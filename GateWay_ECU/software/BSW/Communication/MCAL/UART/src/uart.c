@@ -8,6 +8,9 @@
 #include "Platform_Types.h"
 #include "uart.h"
 #include "UART_HW_Types.h"
+#include "hw_uart.h"
+#include "hw_sysctl.h"
+#include "hw_memmap.h"
 
 /**************************************defines***********************************************/
 
@@ -27,6 +30,18 @@ uint32 Arr_Bases[8] = {BASE_UART0, BASE_UART1, BASE_UART2, BASE_UART3, BASE_UART
 	
 
 /******************************** functions ************************************************/
+#define HWREG(x)                                                              \
+        (*((volatile uint32 *)(x)))
+#define UART_RX                 (1 << UART_RXPIN_POS)
+#define UART_RX_PCTL            (UART_RXPIN_PCTL << (4 * UART_RXPIN_POS))
+
+//*****************************************************************************
+//
+// This defines the UART transmit pin that is being used by the boot loader.
+//
+//*****************************************************************************
+#define UART_TX                 (1 << UART_TXPIN_POS)
+#define UART_TX_PCTL            (UART_TXPIN_PCTL << (4 * UART_TXPIN_POS))
 
 
 enumUARTErrors UART_Init(uint8 UART_Num){
@@ -46,8 +61,15 @@ enumUARTErrors UART_Init(uint8 UART_Num){
 	SET_BIT((Arr_Bases[UART_Num] + CTL), bit9);					 // Enable RX
 	SET_BIT((Arr_Bases[UART_Num] + CTL), bit8);					 // Enable TX
 	SET_BIT((Arr_Bases[UART_Num] + CTL), bit0);					 // Enable UART
-	
-	return No_Errors;
+    HWREG(Arr_Bases[UART_Num] + UART_O_LCRH) = UART_LCRH_WLEN_8 ;//| UART_LCRH_FEN;
+
+    NVIC_PRI1_REG &=~UART0_PRI_BITS;             /* Clear priorty bit field */
+    NVIC_PRI1_REG |= UART0_PRI_1;                /* Set Priority to 1 */
+    NVIC_EN0_REG  |= UART0_ENABLE_INT;           /* Enable UART0 Interrupt in NVIC */
+    *((uint32*)BASE_UART0+UART_O_IM)|=UART_INT_RX;    /*Enable interrupt mask*/
+    *((uint32*)BASE_UART0+ UART_O_CTL) = (UART_CTL_UARTEN | UART_CTL_TXE |
+                                          UART_CTL_RXE);
+    return No_Errors;
 }
 
 /*******************************************************************************************/
@@ -105,8 +127,15 @@ void UARTIntEnable(uint8 UART_Num, uint32 ui32IntFlags)
           NVIC_EN1_R |= (uint32)(1<<31) ;
           break ;
     }
-
     WRITE_REGISTER((Arr_Bases[UART_Num] + IM) , ui32IntFlags) ;
+
+    NVIC_PRI1_REG &=~UART0_PRI_BITS;             /* Clear priorty bit field */
+    NVIC_PRI1_REG |= UART0_PRI_1;                /* Set Priority to 1 */
+    NVIC_EN0_REG  |= UART0_ENABLE_INT;           /* Enable UART0 Interrupt in NVIC */
+    *((uint32*)BASE_UART0+UART_O_IM)|=UART_INT_RX;    /*Enable interrupt mask*/
+    *((uint32*)BASE_UART0+ UART_O_CTL) = (UART_CTL_UARTEN | UART_CTL_TXE |
+                                          UART_CTL_RXE);
+
 }
 
 /*******************************************************************************************/

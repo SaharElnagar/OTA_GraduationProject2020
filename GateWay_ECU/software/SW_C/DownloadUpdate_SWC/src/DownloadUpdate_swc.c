@@ -44,7 +44,7 @@ typedef uint8 Internal_State ;
 
 /*Packet size = 1024 bytes*/
 #define PACKET_SIZE                           1024
-#define FIRST_FRAME_SIZE                      50
+#define FIRST_FRAME_SIZE                      36
 #define KEY_SIZE                              16
 
 /***************************************************************************/
@@ -59,7 +59,8 @@ static uint8 C = 0 ;
 static uint16 BufferSize = 0 ;
 static boolean First_Frame = TRUE, NewRequest = FALSE ;
 static uint8 Key[KEY_SIZE] ;
-static Std_ReturnType StoreState = E_PENDING , RequestResult = E_PENDING ;
+static Std_ReturnType StoreState = E_PENDING ;
+static boolean RequestResult = E_PENDING ;
 
 static enumAltFunc Alternate_Function = UART ;
 static strGPIOPinInit GPIO_Pin_UART_TX ;
@@ -239,57 +240,54 @@ void Download_Update_MainFunction(void)
       case READ_REQUEST_RESULT :
 
             /* read update request flag value from RTE */
-            RTE_Return_Value = RTE_READ_UPDATE_REQ_ACCEPTED( &RequestResult ) ;
+             RTE_READ_UPDATE_REQ_ACCEPTED(&RequestResult) ;
 
-            if(RTE_Return_Value == E_OK)
+            /* Update request is Accepted */
+            if( RequestResult == TRUE )
             {
-                /* Update request is Accepted */
-                if( RequestResult == E_OK )
+                /* return the request accepted flag in RTE to pending state for future requests */
+                RTE_Return_Value = RTE_WRITE_UPDATE_REQ_ACCEPTED(E_PENDING) ;
+
+                if(RTE_Return_Value == E_OK)
                 {
-                    /* return the request accepted flag in RTE to pending state for future requests */
-                    RTE_Return_Value = RTE_WRITE_UPDATE_REQ_ACCEPTED(E_PENDING) ;
+                    /* send UART message to esp to send file size */
+                    UART_Tx(UART0, READY_FOR_UPDATE) ;
 
-                    if(RTE_Return_Value == E_OK)
-                    {
-                        /* send UART message to esp to send file size */
-                        UART_Tx(UART0, READY_FOR_UPDATE) ;
+                    /* go to receive size state */
+                    ModuleState = RECEIVE_SIZE ;
 
-                        /* go to receive size state */
-                        ModuleState = RECEIVE_SIZE ;
-                    }
-                    else
-                    {}
+                    C = 0 ;
                 }
-
-                /* Update request is Refused */
-                else if( RequestResult == E_NOT_OK )
-                {
-                    /* return the request accepted flag in RTE to pending state for future requests */
-                    RTE_Return_Value = RTE_WRITE_UPDATE_REQ_ACCEPTED(E_PENDING) ;
-
-                    if(RTE_Return_Value == E_OK)
-                    {
-                        /* Enable UART Interrupts for future requests */
-                        UARTIntEnable(UART0, UART_INT_RX) ;
-
-                        /* if the user refused the update, send UART message to discard it */
-                        UART_Tx(UART0, DISCARD_UPDATE) ;
-
-                        /* return to IDLE state */
-                        ModuleState = IDLE_STATE ;
-                    }
-                    else
-                    {}
-                }
-
-                /* if the update request is still pending */
                 else
-                {
-                    /* Wait for user response */
-                }
+                {}
             }
+            /* Update request is Refused */
+            else if( RequestResult == E_NOT_OK )
+            {
+                /* return the request accepted flag in RTE to pending state for future requests */
+                RTE_Return_Value = RTE_WRITE_UPDATE_REQ_ACCEPTED(E_PENDING) ;
+
+                if(RTE_Return_Value == E_OK)
+                {
+                    /* Enable UART Interrupts for future requests */
+                    UARTIntEnable(UART0, UART_INT_RX) ;
+
+                    /* if the user refused the update, send UART message to discard it */
+                    UART_Tx(UART0, DISCARD_UPDATE) ;
+
+                    /* return to IDLE state */
+                    ModuleState = IDLE_STATE ;
+                }
+                else
+                {}
+            }
+
+            /* if the update request is still pending */
             else
-            { /* wait for read to be done from RTE */ }
+            {
+                /* Wait for user response */
+            }
+
             break ;
 /***************************RECEIVE_SIZE***********************************/
       case RECEIVE_SIZE :
@@ -480,6 +478,11 @@ void Download_Update_MainFunction(void)
     }
 }
 
+__attribute__((naked)) void irq_Disable(void)
+{
+    __asm(" CPSID I");
+    __asm(" BX LR") ;
+}
 
 /****************************************************************************/
 /*    Function Name           : UART0_Handler                               */
@@ -504,6 +507,11 @@ void UART0_Handler(void)
         /* set internal new request flag to true */
         NewRequest = TRUE ;
     }
+    *((uint32*)0x4000C000+0x00000044)|= UART_INT_RX ;
+    irq_Disable();
+
 }
+
+
 
 

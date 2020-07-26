@@ -1,0 +1,57 @@
+Dependencies for Project 'Bootloader', Target 'Target 1': (DO NOT MODIFY !)
+F (.\bl_flash.c)(0x5D7A90C4)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\objects\bl_flash.o --omf_browse .\objects\bl_flash.crf --depend .\objects\bl_flash.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (inc/hw_types.h)(0x5AA43CEC)
+I (inc/hw_flash.h)(0x5AA43CEC)
+I (inc/hw_sysctl.h)(0x5AA43CEC)
+I (inc/hw_memmap.h)(0x5AA43CEC)
+I (bl_config.h)(0x5D7A453C)
+I (bl_flash.h)(0x5D7A890B)
+I (rom.h)(0x5AA43CE8)
+F (.\Bl_main.c)(0x5D86A36E)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\objects\bl_main.o --omf_browse .\objects\bl_main.crf --depend .\objects\bl_main.d)
+I (uart.h)(0x5D76AD88)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x57F65B18)
+I (inc/hw_sysctl.h)(0x5AA43CEC)
+I (sysctl.h)(0x5D7A453C)
+I (inc/hw_gpio.h)(0x5AA43CEC)
+I (inc/hw_flash.h)(0x5AA43CEC)
+I (inc/hw_i2c.h)(0x5AA43CEC)
+I (inc/hw_memmap.h)(0x5AA43CEC)
+I (inc/hw_nvic.h)(0x5AA43CEC)
+I (inc/hw_ssi.h)(0x5AA43CEC)
+I (inc/hw_types.h)(0x5AA43CEC)
+I (inc/hw_uart.h)(0x5D7E6F53)
+I (bl_config.h)(0x5D7A453C)
+I (bl_uart.h)(0x5D7A8819)
+I (Packet.h)(0x5D86A2D1)
+I (bl_flash.h)(0x5D7A890B)
+I (rom.h)(0x5AA43CE8)
+F (.\bl_uart.c)(0x5D7E7F65)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\objects\bl_uart.o --omf_browse .\objects\bl_uart.crf --depend .\objects\bl_uart.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (inc/hw_gpio.h)(0x5AA43CEC)
+I (inc/hw_memmap.h)(0x5AA43CEC)
+I (inc/hw_sysctl.h)(0x5AA43CEC)
+I (inc/hw_types.h)(0x5AA43CEC)
+I (inc/hw_uart.h)(0x5D7E6F53)
+I (bl_config.h)(0x5D7A453C)
+I (bl_uart.h)(0x5D7A8819)
+I (uart.h)(0x5D76AD88)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x57F65B18)
+F (.\Packet.c)(0x5D7A8819)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\objects\packet.o --omf_browse .\objects\packet.crf --depend .\objects\packet.d)
+I (bl_uart.h)(0x5D7A8819)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (Packet.h)(0x5D86A2D1)
+F (.\sysctl.c)(0x5D7B9950)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DTM4C123GH6PM-o .\objects\sysctl.o --omf_browse .\objects\sysctl.crf --depend .\objects\sysctl.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x57F65B18)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F65B18)
+I (inc/hw_ints.h)(0x5AA43CEC)
+I (inc/hw_nvic.h)(0x5AA43CEC)
+I (inc/hw_sysctl.h)(0x5AA43CEC)
+I (inc/hw_types.h)(0x5AA43CEC)
+I (inc/hw_flash.h)(0x5AA43CEC)
+I (driverlib/cpu.h)(0x5AA43CE7)
+I (driverlib/debug.h)(0x5D76ABF2)
+I (driverlib/interrupt.h)(0x5D76AC9C)
+I (sysctl.h)(0x5D7A453C)
+F (.\Startup.s)(0x5D7E6B8E)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 523" --pd "TM4C123GH6PM SETA 1"--list .\listings\startup.lst --xref -o .\objects\startup.o --depend .\objects\startup.d)

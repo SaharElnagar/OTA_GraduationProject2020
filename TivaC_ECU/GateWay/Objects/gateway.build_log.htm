@@ -1,0 +1,79 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.23.0.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information:   « Sahar, €€€, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.23
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.23
+Dialog DLL:      DCM.DLL V1.15.0.0
+Target DLL:      UL2CM3.DLL V1.159.7.0
+Dialog DLL:      TCM.DLL V1.27.0.0
+ 
+<h2>Project:</h2>
+R:\MyBootLoader\Boot\GateWay\gateway.uvprojx
+Project File Date:  03/16/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+compiling bl_CAN.c...
+assembling startup_TM4C123.s...
+compiling GW_main.c...
+sysctl.h(47): warning:  #47-D: incompatible redefinition of macro "SYSCTL_RIS_R"  (declared at line 2049 of "tm4c123gh6pm.h")
+  #define SYSCTL_RIS_R            (*((volatile unsigned long *)0x400FE050))
+sysctl.h(49): warning:  #47-D: incompatible redefinition of macro "SYSCTL_RCC_R"  (declared at line 2053 of "tm4c123gh6pm.h")
+  #define SYSCTL_RCC_R            (*((volatile unsigned long *)0x400FE060))
+sysctl.h(54): warning:  #47-D: incompatible redefinition of macro "SYSCTL_RCC2_R"  (declared at line 2055 of "tm4c123gh6pm.h")
+  #define SYSCTL_RCC2_R           (*((volatile unsigned long *)0x400FE070))
+GW_main.c(105): error:  #20: identifier "RECEIVE_PACKET" is undefined
+  					Cmd_Status = RECEIVE_PACKET ;			 
+GW_main.c(141): warning:  #1-D: last line of file ends without a newline
+  }
+GW_main.c: 4 warnings, 1 error
+compiling can_driver.c...
+compiling system_TM4C123.c...
+".\Objects\gateway.axf" - 1 Error(s), 4 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
+                ARM::CMSIS:CORE:5.3.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.3.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.TM4C_DFP.1.1.0.pack
+                Keil::Device:Startup:1.0.1
+                Texas Instruments Tiva C Series Device Support and Examples
+   * Component: Startup Version: 1.0.1
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_Target_1
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.3.0
+
+   * Component: Keil::Device:Startup:1.0.1
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\system_TM4C123.c
+Target not created.
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

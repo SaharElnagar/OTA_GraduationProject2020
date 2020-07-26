@@ -89,25 +89,24 @@ void Decryption_MainFunction(void)
        case IDLE_STATE :
 
            /* wait for new encrypted data flag to be equal to TRUE */
-           RTE_Return_Value = RTE_READ_NEW_ENCRYPTED_FLAG(&NewDataFlag) ;
+           RTE_READ_NEW_ENCRYPTED_FLAG(&NewDataFlag) ;
 
-           if(RTE_Return_Value == E_OK)
+           if(NewDataFlag == TRUE)
            {
-               if(NewDataFlag == TRUE)
-               {
-                  /* set new encrypted data flag to FALSE */
-                   RTE_Return_Value = RTE_WRITE_NEW_ENCRYPTED_FLAG(FALSE) ;
+              /* set new encrypted data flag to FALSE */
+               RTE_Return_Value = RTE_WRITE_NEW_ENCRYPTED_FLAG(FALSE) ;
 
-                   if(RTE_Return_Value == E_OK)
-                   {
-                       /* Go to receive packet state */
-                       ModuleState = GET_KEY ;
-                   }
-                   else {}
+               if(RTE_Return_Value == E_OK)
+               {
+                   /* Go to receive packet state */
+                   ModuleState = GET_KEY ;
                }
-               else {}
+               else
+               {}
            }
-           else {}
+           else
+           {}
+
            break ;
 /****************************GET_KEY***************************/
        case GET_KEY :

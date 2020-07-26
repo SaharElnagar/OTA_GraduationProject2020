@@ -21,7 +21,7 @@
 #define  RTE_WRITE_DECRYPTED_BUFFER        Rte_Write_DecryptedBuffer
 #define  RTE_WRITE_NEW_DECRYPTED_FLAG      Rte_Write_NewDecryptedDataFlag
 #define  RTE_WRITE_KEY_CHANGED             Rte_Write_KeyChanged
-
+#define  RTE_WRITE_FRAME_INFO              Rte_Write_FrameInfo
 /**************************************************************************/
 /*                         Requested Ports                                */
 /**************************************************************************/
@@ -30,6 +30,6 @@
 #define  RTE_READ_NEW_ENCRYPTED_FLAG       Rte_Read_NewEncryptedDataFlg
 #define  RTE_READ_DECRYPTION_KEY           Rte_Read_Decryption_key
 #define  RTE_READ_KEY_CHANGED_FLAG         Rte_Read_KeyChanged
-
+#define  RTE_READ_FRAME_INFO               Rte_Read_FrameInfo
 #endif
 

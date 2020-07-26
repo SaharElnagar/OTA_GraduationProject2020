@@ -1,0 +1,1233 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000         
+    4 00000000         
+    5 00000000         
+    6 00000000 E000ED08 
+                       NVIC_VTABLE
+                               equ              0xE000ED08
+    7 00000000 00001000 
+                       _VTABLE_START_ADDRESS
+                               equ              0x00001000
+    8 00000000 00001000 
+                       _APP_START_ADDRESS
+                               equ              0x00001000
+    9 00000000         
+   10 00000000         
+   11 00000000                 thumb
+   12 00000000                 require8
+   13 00000000                 preserve8
+   14 00000000         
+   15 00000000         
+   16 00000000 00000040 
+                       _STACK_SIZE
+                               EQU              64
+   17 00000000         
+   18 00000000         ;*******************************************************
+                       ***********************
+   19 00000000         ;
+   20 00000000         ; The stack gets placed into the zero-init section.
+   21 00000000         ;
+   22 00000000         ;*******************************************************
+                       ***********************  
+   23 00000000                 area             ||.bss||, noinit, align=2
+   24 00000000         
+   25 00000000         ;*******************************************************
+                       ***********************
+   26 00000000         ;
+   27 00000000         ; Allocate storage for the stack.
+   28 00000000         ;
+   29 00000000         ;*******************************************************
+                       ***********************
+   30 00000000         g_pulStack                           ; pointer to start 
+                                                            address of the next
+                                                             space 
+   31 00000000         Stack_Mem
+                               space            _STACK_SIZE*4
+   32 00000100         
+   33 00000100         
+   34 00000100         ;*******************************************************
+                       ***********************
+   35 00000100         ;
+   36 00000100         ; This portion of the file goes into the reset section.
+   37 00000100         ;
+   38 00000100         ;*******************************************************
+                       ***********************
+   39 00000100                 area             RESET, code, readonly, align=3
+   40 00000000         
+   41 00000000         ; Vector Table Mapped to Address 0 at Reset
+   42 00000000         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   43 00000000                 AREA             RESET, DATA, READONLY
+   44 00000000                 EXPORT           __Vectors
+   45 00000000                 EXPORT           __Vectors_End
+   46 00000000                 EXPORT           __Vectors_Size
+   47 00000000         
+   48 00000000         
+   49 00000000 00000100 
+                       __Vectors
+                               DCD              g_pulStack + (_STACK_SIZE *4 ) 
+                                                            ; Top of Stack
+   50 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   51 00000008 00000000        DCD              NMI_Handler ; NMI Handler
+   52 0000000C 00000000        DCD              HardFault_Handler ; Hard Fault 
+                                                            Handler
+   53 00000010 00000000        DCD              IntDefaultHandler ; Offset 10: 
+                                                            MPU fault handler
+   54 00000014 00000000        DCD              IntDefaultHandler ; Offset 14: 
+                                                            Bus fault handler
+   55 00000018 00000000        DCD              IntDefaultHandler ; Offset 18: 
+                                                            Usage fault handler
+                                                            
+   56 0000001C 00000000        DCD              0           ; Offset 1C: Reserv
+                                                            ed
+   57 00000020 00000000        DCD              0           ; Offset 20: Reserv
+                                                            ed
+   58 00000024 00000000        DCD              0           ; Offset 24: Reserv
+                                                            ed
+   59 00000028 00000000        DCD              0           ; Offset 28: Reserv
+                                                            ed
+   60 0000002C 00000000        DCD              IntDefaultHandler ;UpdateHandle
+                                                            r                  
+                                                             ; Offset 2C: SVCal
+                                                            l handler
+   61 00000030 00000000        DCD              IntDefaultHandler ; Offset 30: 
+                                                            Debug monitor handl
+                                                            er
+   62 00000034 00000000        DCD              0           ; Offset 34: Reserv
+                                                            ed
+   63 00000038 00000000        DCD              IntDefaultHandler ; Offset 38: 
+                                                            PendSV handler
+   64 0000003C                 if               :def:_ENET_ENABLE_UPDATE
+   68 0000003C 00000000        DCD              IntDefaultHandler ; Offset 3C: 
+                                                            SysTick handler
+   69 00000040                 endif
+   70 00000040                 if               :def:_UART_ENABLE_UPDATE :land:
+ :def:_UART_AUTOBAUD
+   74 00000040 00000000        DCD              IntDefaultHandler ; Offset 40: 
+                                                            GPIO port A handler
+                                                            
+   75 00000044                 endif
+   76 00000044 00000000        DCD              IntDefaultHandler 
+                                                            ;   1: GPIO Port B
+   77 00000048 00000000        DCD              IntDefaultHandler 
+                                                            ;   2: GPIO Port C
+   78 0000004C 00000000        DCD              IntDefaultHandler 
+                                                            ;   3: GPIO Port D
+   79 00000050 00000000        DCD              IntDefaultHandler 
+                                                            ;   4: GPIO Port E
+   80 00000054 00000000        DCD              UART0_Handler ;   5: UART0 Rx a
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+                                                            nd Tx
+   81 00000058 00000000        DCD              IntDefaultHandler ;   6: UART1 
+                                                            Rx and Tx
+   82 0000005C 00000000        DCD              IntDefaultHandler ;   7: SSI0 R
+                                                            x and Tx
+   83 00000060 00000000        DCD              IntDefaultHandler ;   8: I2C0 M
+                                                            aster and Slave
+   84 00000064 00000000        DCD              IntDefaultHandler 
+                                                            ;   9: PWM Fault
+   85 00000068 00000000        DCD              IntDefaultHandler ;  10: PWM Ge
+                                                            nerator 0
+   86 0000006C 00000000        DCD              IntDefaultHandler ;  11: PWM Ge
+                                                            nerator 1
+   87 00000070 00000000        DCD              IntDefaultHandler ;  12: PWM Ge
+                                                            nerator 2
+   88 00000074 00000000        DCD              IntDefaultHandler ;  13: Quadra
+                                                            ture Encoder 0
+   89 00000078 00000000        DCD              IntDefaultHandler ;  14: ADC Se
+                                                            quence 0
+   90 0000007C 00000000        DCD              IntDefaultHandler ;  15: ADC Se
+                                                            quence 1
+   91 00000080 00000000        DCD              IntDefaultHandler ;  16: ADC Se
+                                                            quence 2
+   92 00000084 00000000        DCD              IntDefaultHandler ;  17: ADC Se
+                                                            quence 3
+   93 00000088 00000000        DCD              IntDefaultHandler ;  18: Watchd
+                                                            og timer
+   94 0000008C 00000000        DCD              IntDefaultHandler ;  19: Timer 
+                                                            0 subtimer A
+   95 00000090 00000000        DCD              IntDefaultHandler ;  20: Timer 
+                                                            0 subtimer B
+   96 00000094 00000000        DCD              IntDefaultHandler ;  21: Timer 
+                                                            1 subtimer A
+   97 00000098 00000000        DCD              IntDefaultHandler ;  22: Timer 
+                                                            1 subtimer B
+   98 0000009C 00000000        DCD              IntDefaultHandler ;  23: Timer 
+                                                            2 subtimer A
+   99 000000A0 00000000        DCD              IntDefaultHandler ;  24: Timer 
+                                                            2 subtimer B
+  100 000000A4 00000000        DCD              IntDefaultHandler ;  25: Analog
+                                                             Comparator 0
+  101 000000A8 00000000        DCD              IntDefaultHandler ;  26: Analog
+                                                             Comparator 1
+  102 000000AC 00000000        DCD              IntDefaultHandler ;  27: Analog
+                                                             Comparator 2
+  103 000000B0 00000000        DCD              IntDefaultHandler ;  28: System
+                                                             Control (PLL, OSC,
+                                                             BO)
+  104 000000B4 00000000        DCD              IntDefaultHandler ;  29: FLASH 
+                                                            Control
+  105 000000B8 00000000        DCD              IntDefaultHandler 
+                                                            ;  30: GPIO Port F
+  106 000000BC 00000000        DCD              IntDefaultHandler 
+                                                            ;  31: GPIO Port G
+  107 000000C0 00000000        DCD              IntDefaultHandler 
+                                                            ;  32: GPIO Port H
+  108 000000C4 00000000        DCD              IntDefaultHandler ;  33: UART2 
+                                                            Rx and Tx
+  109 000000C8 00000000        DCD              IntDefaultHandler ;  34: SSI1 R
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+                                                            x and Tx
+  110 000000CC 00000000        DCD              IntDefaultHandler ;  35: Timer 
+                                                            3 subtimer A
+  111 000000D0 00000000        DCD              IntDefaultHandler ;  36: Timer 
+                                                            3 subtimer B
+  112 000000D4 00000000        DCD              IntDefaultHandler ;  37: I2C1 M
+                                                            aster and Slave
+  113 000000D8 00000000        DCD              IntDefaultHandler ;  38: Quadra
+                                                            ture Encoder 1
+  114 000000DC 00000000        DCD              IntDefaultHandler ;  39: CAN0
+  115 000000E0 00000000        DCD              IntDefaultHandler ;  40: CAN1
+  116 000000E4 00000000        DCD              IntDefaultHandler ;  41: CAN2
+  117 000000E8 00000000        DCD              0           ;  42: Reserved
+  118 000000EC 00000000        DCD              IntDefaultHandler 
+                                                            ;  43: Hibernate
+  119 000000F0 00000000        DCD              IntDefaultHandler ;  44: USB0
+  120 000000F4 00000000        DCD              IntDefaultHandler ;  45: PWM Ge
+                                                            nerator 3
+  121 000000F8 00000000        DCD              IntDefaultHandler ;  46: uDMA S
+                                                            oftware Transfer
+  122 000000FC 00000000        DCD              IntDefaultHandler 
+                                                            ;  47: uDMA Error
+  123 00000100 00000000        DCD              IntDefaultHandler ;  48: ADC1 S
+                                                            equence 0
+  124 00000104 00000000        DCD              IntDefaultHandler ;  49: ADC1 S
+                                                            equence 1
+  125 00000108 00000000        DCD              IntDefaultHandler ;  50: ADC1 S
+                                                            equence 2
+  126 0000010C 00000000        DCD              IntDefaultHandler ;  51: ADC1 S
+                                                            equence 3
+  127 00000110 00000000        DCD              0           ;  52: Reserved
+  128 00000114 00000000        DCD              0           ;  53: Reserved
+  129 00000118 00000000        DCD              IntDefaultHandler 
+                                                            ;  54: GPIO Port J
+  130 0000011C 00000000        DCD              IntDefaultHandler 
+                                                            ;  55: GPIO Port K
+  131 00000120 00000000        DCD              IntDefaultHandler 
+                                                            ;  56: GPIO Port L
+  132 00000124 00000000        DCD              IntDefaultHandler ;  57: SSI2 R
+                                                            x and Tx
+  133 00000128 00000000        DCD              IntDefaultHandler ;  58: SSI3 R
+                                                            x and Tx
+  134 0000012C 00000000        DCD              IntDefaultHandler ;  59: UART3 
+                                                            Rx and Tx
+  135 00000130 00000000        DCD              IntDefaultHandler ;  60: UART4 
+                                                            Rx and Tx
+  136 00000134 00000000        DCD              IntDefaultHandler ;  61: UART5 
+                                                            Rx and Tx
+  137 00000138 00000000        DCD              IntDefaultHandler ;  62: UART6 
+                                                            Rx and Tx
+  138 0000013C 00000000        DCD              IntDefaultHandler ;  63: UART7 
+                                                            Rx and Tx
+  139 00000140 00000000        DCD              0           ;  64: Reserved
+  140 00000144 00000000        DCD              0           ;  65: Reserved
+  141 00000148 00000000        DCD              0           ;  66: Reserved
+  142 0000014C 00000000        DCD              0           ;  67: Reserved
+  143 00000150 00000000        DCD              IntDefaultHandler ;  68: I2C2 M
+                                                            aster and Slave
+  144 00000154 00000000        DCD              IntDefaultHandler ;  69: I2C3 M
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+                                                            aster and Slave
+  145 00000158 00000000        DCD              IntDefaultHandler ;  70: Timer 
+                                                            4 subtimer A
+  146 0000015C 00000000        DCD              IntDefaultHandler ;  71: Timer 
+                                                            4 subtimer B
+  147 00000160 00000000        DCD              0           ;  72: Reserved
+  148 00000164 00000000        DCD              0           ;  73: Reserved
+  149 00000168 00000000        DCD              0           ;  74: Reserved
+  150 0000016C 00000000        DCD              0           ;  75: Reserved
+  151 00000170 00000000        DCD              0           ;  76: Reserved
+  152 00000174 00000000        DCD              0           ;  77: Reserved
+  153 00000178 00000000        DCD              0           ;  78: Reserved
+  154 0000017C 00000000        DCD              0           ;  79: Reserved
+  155 00000180 00000000        DCD              0           ;  80: Reserved
+  156 00000184 00000000        DCD              0           ;  81: Reserved
+  157 00000188 00000000        DCD              0           ;  82: Reserved
+  158 0000018C 00000000        DCD              0           ;  83: Reserved
+  159 00000190 00000000        DCD              0           ;  84: Reserved
+  160 00000194 00000000        DCD              0           ;  85: Reserved
+  161 00000198 00000000        DCD              0           ;  86: Reserved
+  162 0000019C 00000000        DCD              0           ;  87: Reserved
+  163 000001A0 00000000        DCD              0           ;  88: Reserved
+  164 000001A4 00000000        DCD              0           ;  89: Reserved
+  165 000001A8 00000000        DCD              0           ;  90: Reserved
+  166 000001AC 00000000        DCD              0           ;  91: Reserved
+  167 000001B0 00000000        DCD              IntDefaultHandler ;  92: Timer 
+                                                            5 subtimer A
+  168 000001B4 00000000        DCD              IntDefaultHandler ;  93: Timer 
+                                                            5 subtimer B
+  169 000001B8 00000000        DCD              IntDefaultHandler ;  94: Wide T
+                                                            imer 0 subtimer A
+  170 000001BC 00000000        DCD              IntDefaultHandler ;  95: Wide T
+                                                            imer 0 subtimer B
+  171 000001C0 00000000        DCD              IntDefaultHandler ;  96: Wide T
+                                                            imer 1 subtimer A
+  172 000001C4 00000000        DCD              IntDefaultHandler ;  97: Wide T
+                                                            imer 1 subtimer B
+  173 000001C8 00000000        DCD              IntDefaultHandler ;  98: Wide T
+                                                            imer 2 subtimer A
+  174 000001CC 00000000        DCD              IntDefaultHandler ;  99: Wide T
+                                                            imer 2 subtimer B
+  175 000001D0 00000000        DCD              IntDefaultHandler ; 100: Wide T
+                                                            imer 3 subtimer A
+  176 000001D4 00000000        DCD              IntDefaultHandler ; 101: Wide T
+                                                            imer 3 subtimer B
+  177 000001D8 00000000        DCD              IntDefaultHandler ; 102: Wide T
+                                                            imer 4 subtimer A
+  178 000001DC 00000000        DCD              IntDefaultHandler ; 103: Wide T
+                                                            imer 4 subtimer B
+  179 000001E0 00000000        DCD              IntDefaultHandler ; 104: Wide T
+                                                            imer 5 subtimer A
+  180 000001E4 00000000        DCD              IntDefaultHandler ; 105: Wide T
+                                                            imer 5 subtimer B
+  181 000001E8 00000000        DCD              IntDefaultHandler ; 106: FPU
+  182 000001EC 00000000        DCD              0           ; 107: Reserved
+  183 000001F0 00000000        DCD              0           ; 108: Reserved
+  184 000001F4 00000000        DCD              IntDefaultHandler ; 109: I2C4 M
+                                                            aster and Slave
+  185 000001F8 00000000        DCD              IntDefaultHandler ; 110: I2C5 M
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+                                                            aster and Slave
+  186 000001FC 00000000        DCD              IntDefaultHandler 
+                                                            ; 111: GPIO Port M
+  187 00000200 00000000        DCD              IntDefaultHandler 
+                                                            ; 112: GPIO Port N
+  188 00000204 00000000        DCD              IntDefaultHandler ; 113: Quadra
+                                                            ture Encoder 2
+  189 00000208 00000000        DCD              0           ; 114: Reserved
+  190 0000020C 00000000        DCD              0           ; 115: Reserved
+  191 00000210 00000000        DCD              IntDefaultHandler ; 116: GPIO P
+                                                            ort P (Summary or P
+                                                            0)
+  192 00000214 00000000        DCD              IntDefaultHandler 
+                                                            ; 117: GPIO Port P1
+                                                            
+  193 00000218 00000000        DCD              IntDefaultHandler 
+                                                            ; 118: GPIO Port P2
+                                                            
+  194 0000021C 00000000        DCD              IntDefaultHandler 
+                                                            ; 119: GPIO Port P3
+                                                            
+  195 00000220 00000000        DCD              IntDefaultHandler 
+                                                            ; 120: GPIO Port P4
+                                                            
+  196 00000224 00000000        DCD              IntDefaultHandler 
+                                                            ; 121: GPIO Port P5
+                                                            
+  197 00000228 00000000        DCD              IntDefaultHandler 
+                                                            ; 122: GPIO Port P6
+                                                            
+  198 0000022C 00000000        DCD              IntDefaultHandler 
+                                                            ; 123: GPIO Port P7
+                                                            
+  199 00000230 00000000        DCD              IntDefaultHandler ; 124: GPIO P
+                                                            ort Q (Summary or Q
+                                                            0)
+  200 00000234 00000000        DCD              IntDefaultHandler 
+                                                            ; 125: GPIO Port Q1
+                                                            
+  201 00000238 00000000        DCD              IntDefaultHandler 
+                                                            ; 126: GPIO Port Q2
+                                                            
+  202 0000023C 00000000        DCD              IntDefaultHandler 
+                                                            ; 127: GPIO Port Q3
+                                                            
+  203 00000240 00000000        DCD              IntDefaultHandler 
+                                                            ; 128: GPIO Port Q4
+                                                            
+  204 00000244 00000000        DCD              IntDefaultHandler 
+                                                            ; 129: GPIO Port Q5
+                                                            
+  205 00000248 00000000        DCD              IntDefaultHandler 
+                                                            ; 130: GPIO Port Q6
+                                                            
+  206 0000024C 00000000        DCD              IntDefaultHandler 
+                                                            ; 131: GPIO Port Q7
+                                                            
+  207 00000250 00000000        DCD              IntDefaultHandler 
+                                                            ; 132: GPIO Port R
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  208 00000254 00000000        DCD              IntDefaultHandler 
+                                                            ; 133: GPIO Port S
+  209 00000258 00000000        DCD              IntDefaultHandler ; 134: PWM 1 
+                                                            Generator 0
+  210 0000025C 00000000        DCD              IntDefaultHandler ; 135: PWM 1 
+                                                            Generator 1
+  211 00000260 00000000        DCD              IntDefaultHandler ; 136: PWM 1 
+                                                            Generator 2
+  212 00000264 00000000        DCD              IntDefaultHandler ; 137: PWM 1 
+                                                            Generator 3
+  213 00000268 00000000        DCD              IntDefaultHandler 
+                                                            ; 138: PWM 1 Fault
+  214 0000026C         
+  215 0000026C         __Vectors_End
+  216 0000026C         
+  217 0000026C 0000026C 
+                       __Vectors_Size
+                               EQU              __Vectors_End - __Vectors
+  218 0000026C         
+  219 0000026C         
+  220 0000026C         ;*******************************************************
+                       ***********************
+  221 0000026C         ;
+  222 0000026C         ; Initialize the processor by copying the boot loader fr
+                       om flash to SRAM, zero
+  223 0000026C         ; filling the .bss section, and moving the vector table 
+                       to the beginning of
+  224 0000026C         ; SRAM.  The return address is modified to point to the 
+                       SRAM copy of the boot
+  225 0000026C         ; loader instead of the flash copy, resulting in a branc
+                       h to the copy now in
+  226 0000026C         ; SRAM.
+  227 0000026C         ;
+  228 0000026C         ;*******************************************************
+                       ***********************
+  229 0000026C                 export           ProcessorInit
+  230 0000026C         ProcessorInit
+  231 0000026C         ;
+  232 0000026C         ; Copy the code image from flash to SRAM.
+  233 0000026C         ;
+  234 0000026C 2000            movs             r0, #0x0000
+  235 0000026E 2100            movs             r1, #0x0000 ; raise Z F V flags
+                                                             if result has them
+                                                            
+  236 00000270 F2C2 0100       movt             r1, #0x2000 ;move upper 16-bits
+                                                            
+  237 00000274                 import           ||Image$$SRAM$$ZI$$Base||
+  238 00000274 4A12            ldr              r2, =||Image$$SRAM$$ZI$$Base||
+  239 00000276         copy_loop
+  240 00000276 F850 3B04       ldr              r3, [r0], #4
+  241 0000027A F841 3B04       str              r3, [r1], #4
+  242 0000027E 4291            cmp              r1, r2
+  243 00000280 DBF9            blt              copy_loop
+  244 00000282         
+  245 00000282         ;
+  246 00000282         ; Zero fill the .bss section.
+  247 00000282         ;
+  248 00000282                 import           ||Image$$SRAM$$ZI$$Base||
+  249 00000282 490F            ldr              r1, =||Image$$SRAM$$ZI$$Base||
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+  250 00000284 2000            movs             r0, #0x0000
+  251 00000286                 import           ||Image$$SRAM$$ZI$$Limit||
+  252 00000286 4A0F            ldr              r2, =||Image$$SRAM$$ZI$$Limit||
+  253 00000288         zero_loop
+  254 00000288 F841 0B04       str              r0, [r1], #4
+  255 0000028C 4291            cmp              r1, r2
+  256 0000028E DBFB            blt              zero_loop
+  257 00000290         
+  258 00000290         ;
+  259 00000290         ; Set the vector table pointer to the beginning of SRAM.
+                       
+  260 00000290         ;
+  261 00000290 F64E 5008       movw             r0, #(NVIC_VTABLE & 0xffff)
+  262 00000294 F2CE 0000       movt             r0, #(NVIC_VTABLE >> 16)
+  263 00000298 2100            movs             r1, #0x0000
+  264 0000029A F2C2 0100       movt             r1, #0x2000
+  265 0000029E 6001            str              r1, [r0]
+  266 000002A0         
+  267 000002A0         ;
+  268 000002A0         ; Return to the caller.
+  269 000002A0         ;
+  270 000002A0 4770            bx               lr
+  271 000002A2         
+  272 000002A2                 export           Reset_Handler
+  273 000002A2         Reset_Handler
+  274 000002A2         
+  275 000002A2         ;
+  276 000002A2         ; Enable the floating-point unit.  This must be done her
+                       e in case any
+  277 000002A2         ; later C functions use floating point.  Note that some 
+                       toolchains will
+  278 000002A2         ; use the FPU registers for general workspace even if no
+                        explicit floating
+  279 000002A2         ; point data types are in use.
+  280 000002A2         ;
+  281 000002A2 F64E 5088       movw             r0, #0xED88
+  282 000002A6 F2CE 0000       movt             r0, #0xE000
+  283 000002AA 6801            ldr              r1, [r0]
+  284 000002AC F441 0170       orr              r1, #0x00F00000
+  285 000002B0 6001            str              r1, [r0]
+  286 000002B2         
+  287 000002B2         ;
+  288 000002B2         ; Initialize the processor.
+  289 000002B2         ;
+  290 000002B2 F7FF FFFE       bl               ProcessorInit
+  291 000002B6         
+  292 000002B6         ;
+  293 000002B6         ; Branch to the SRAM copy of the reset handler.
+  294 000002B6         ;
+  295 000002B6 F8DF F010       ldr              pc, =Reset_Handler_In_SRAM
+  296 000002BA         
+  297 000002BA         ;*******************************************************
+                       ***********************
+  298 000002BA         ;
+  299 000002BA         ; The NMI handler.
+  300 000002BA         ;
+  301 000002BA         ;*******************************************************
+                       ***********************
+  302 000002BA         NMI_Handler
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+  303 000002BA                 if               :def:_ENABLE_MOSCFAIL_HANDLER
+  321 000002BA         ;
+  322 000002BA         ; Loop forever since there is nothing that we can do abo
+                       ut a NMI.
+  323 000002BA         ;
+  324 000002BA E7FE            B                .
+  325 000002BC                 endif
+  326 000002BC         
+  327 000002BC         ;*******************************************************
+                       ***********************
+  328 000002BC         ;
+  329 000002BC         ; The hard fault handler.
+  330 000002BC         ;
+  331 000002BC         ;*******************************************************
+                       *********************** 
+  333 000002BC         UART0_Handler
+                               PROC
+  334 000002BC                 EXPORT           UART0_Handler [WEAK]
+  335 000002BC E7FE            B                .
+  336 000002BE                 ENDP
+  337 000002BE         
+  339 000002BE         HardFault_Handler
+                               PROC
+  340 000002BE                 EXPORT           HardFault_Handler         [WEAK
+]
+  341 000002BE E7FE            B                .
+  342 000002C0                 ENDP
+  343 000002C0         
+  344 000002C0         ;*******************************************************
+                       ***********************
+  345 000002C0         ;
+  346 000002C0         ; This portion of the file goes into the text section.
+  347 000002C0         ;
+  348 000002C0         ;*******************************************************
+                       ***********************
+  349 000002C0                 align            4
+  350 000002C0 00000000 
+              00000000 
+              00000000         area             ||.text||, code, readonly, alig
+n=2
+  351 00000000         
+  352 00000000         Reset_Handler_In_SRAM
+  353 00000000         ;
+  354 00000000         ; Call the user-supplied low level hardware initializati
+                       on function
+  355 00000000         ; if provided.
+  356 00000000         ;
+  357 00000000         
+  358 00000000                 import           INIT_EEPROM
+  359 00000000 F7FF FFFE       bl               INIT_EEPROM
+  360 00000004         
+  361 00000004         
+  362 00000004         ;
+  363 00000004         ; See if an update should be performed.
+  364 00000004         ;
+  365 00000004                 import           CheckForceUpdate
+  366 00000004 F7FF FFFE       bl               CheckForceUpdate
+  367 00000008         ; cbz     r0, CallApplication
+  368 00000008         
+
+
+
+ARM Macro Assembler    Page 10 
+
+
+  369 00000008         ;
+  370 00000008         ; Configure the microcontroller.
+  371 00000008         ;
+  372 00000008         EnterBootLoader
+  373 00000008                 if               :def:_ENET_ENABLE_UPDATE
+  383 00000008         ;  import  ConfigureDevice     ;init clock and UART
+  384 00000008         ;  bl      ConfigureDevice
+  385 00000008                 import           Bl_main
+  386 00000008 F7FF FFFE       bl               Bl_main
+  387 0000000C                 endif
+  388 0000000C         
+  389 0000000C         
+  390 0000000C         ;
+  391 0000000C         ; This is a second symbol to allow starting the applicat
+                       ion from the boot
+  392 0000000C         ; loader the linker may not like the perceived jump.
+  393 0000000C         ;
+  394 0000000C                 export           StartApplication
+  395 0000000C         StartApplication
+  396 0000000C         ;
+  397 0000000C         ; Call the application via the reset handler in its vect
+                       or table.  Load the
+  398 0000000C         ; address of the application vector table.
+  399 0000000C         ;
+  400 0000000C         CallApplication
+  401 0000000C         ;
+  402 0000000C         ; Copy the application's vector table to the target addr
+                       ess if necessary.
+  403 0000000C         ; Note that incorrect boot loader configuration could ca
+                       use this to
+  404 0000000C         ; corrupt the code!  Setting VTABLE_START_ADDRESS to 0x2
+                       0000000 (the start
+  405 0000000C         ; of SRAM) is safe since this will use the same memory t
+                       hat the boot loader
+  406 0000000C         ; already uses for its vector table.  Great care will ha
+                       ve to be taken if
+  407 0000000C         ; other addresses are to be used.
+  408 0000000C         ;
+  409 0000000C         ; if (_APP_START_ADDRESS != _VTABLE_START_ADDRESS)
+  410 0000000C         ;  movw    r0, #(_VTABLE_START_ADDRESS & 0xffff)
+  411 0000000C         ;  if (_VTABLE_START_ADDRESS > 0xffff)
+  412 0000000C         ;  movt    r0, #(_VTABLE_START_ADDRESS >> 16)
+  413 0000000C         ;  endif
+  414 0000000C         ;  movw    r1, #(_APP_START_ADDRESS & 0xffff)
+  415 0000000C         ;  if (_APP_START_ADDRESS > 0xffff)
+  416 0000000C         ;  movt    r1, #(_APP_START_ADDRESS >> 16)
+  417 0000000C         ;  endif*/
+  418 0000000C         
+  419 0000000C         ;
+  420 0000000C         ; Calculate the end address of the vector table assuming
+                        that it has the
+  421 0000000C         ; maximum possible number of vectors.  We don't know how
+                        many the app has
+  422 0000000C         ; populated so this is the safest approach though it may
+                        copy some non
+  423 0000000C         ; vector data if the app table is smaller than the maxim
+                       um.
+  424 0000000C         ;
+  425 0000000C         ;   movw    r2, #(70 * 4)
+
+
+
+ARM Macro Assembler    Page 11 
+
+
+  426 0000000C         ;   adds    r2, r2, r0
+  427 0000000C         ;VectorCopyLoop
+  428 0000000C         ;       ldr     r3, [r1], #4
+  429 0000000C         ;       str     r3, [r0], #4
+  430 0000000C         ;       cmp     r0, r2
+  431 0000000C         ;       blt     VectorCopyLoop
+  432 0000000C         ;   endif*/
+  433 0000000C         
+  434 0000000C         ;
+  435 0000000C         ; Set the vector table address to the beginning of the a
+                       pplication.
+  436 0000000C         ; the beginning of the application is an input parameter
+                        saved in r0 register
+  437 0000000C         ;
+  438 0000000C         ;   /*movw    r0, #(_VTABLE_START_ADDRESS & 0xffff)
+  439 0000000C         ;   if (_VTABLE_START_ADDRESS > 0xffff)
+  440 0000000C         ;   movt    r0, #(_VTABLE_START_ADDRESS >> 16)
+  441 0000000C         ;   endif*/
+  442 0000000C F64E 5108       movw             r1, #(NVIC_VTABLE & 0xffff)
+  443 00000010 F2CE 0100       movt             r1, #(NVIC_VTABLE >> 16)
+  444 00000014 6008            str              r0, [r1]
+  445 00000016         
+  446 00000016         ;
+  447 00000016         ; Load the stack pointer from the application's vector t
+                       able.
+  448 00000016         ;
+  449 00000016         ; /*   if (_APP_START_ADDRESS != _VTABLE_START_ADDRESS)
+  450 00000016         ;    movw    r0, #(_APP_START_ADDRESS & 0xffff)
+  451 00000016         ;    if (_APP_START_ADDRESS > 0xffff)
+  452 00000016         ;    movt    r0, #(_APP_START_ADDRESS >> 16)
+  453 00000016         ;    endif
+  454 00000016         ;    endif*/
+  455 00000016 F8D0 D000       ldr              sp, [r0]
+  456 0000001A         
+  457 0000001A         ;
+  458 0000001A         ; Load the initial PC from the application's vector tabl
+                       e and branch to
+  459 0000001A         ; the application's entry point.
+  460 0000001A         ;
+  461 0000001A F100 0004       ADD              r0,#4
+  462 0000001E F8D0 F000       ldr              pc,[r0]
+  463 00000022         
+  464 00000022         ;*******************************************************
+                       ***********************
+  465 00000022         ;
+  466 00000022         ; The default interrupt handler.
+  467 00000022         ;
+  468 00000022         ;*******************************************************
+                       ***********************
+  469 00000022         IntDefaultHandler
+  470 00000022         ;
+  471 00000022         ; Loop forever since there is nothing that we can do abo
+                       ut an unexpected
+  472 00000022         ; interrupt.
+  473 00000022         ;
+  474 00000022 E7FE            b                .
+  475 00000024         
+  476 00000024         ;*******************************************************
+                       ***********************
+
+
+
+ARM Macro Assembler    Page 12 
+
+
+  477 00000024         ;
+  478 00000024         ; Provides a small delay.  The loop below takes 3 cycles
+                       /loop.
+  479 00000024         ;
+  480 00000024         ;*******************************************************
+                       ***********************
+  481 00000024         ALIGN                                ;******************
+                                                            ********
+  482 00000024                 EXPORT           DisableInterrupts
+  483 00000024                 EXPORT           EnableInterrupts
+  484 00000024                 EXPORT           SysCtlDelay
+  485 00000024                 export           Delay
+  486 00000024         Delay
+  487 00000024 3801            subs             r0, #1
+  488 00000026 D1FE            bne              Delay
+  489 00000028 4770            bx               lr
+  490 0000002A         
+  491 0000002A         
+  492 0000002A         SysCtlDelay
+  493 0000002A 3801            subs             r0, #1      ;
+  494 0000002C D1FE            bne              SysCtlDelay ;
+  495 0000002E 4770            bx               lr          ;
+  496 00000030         
+  497 00000030         ;*********** DisableInterrupts ***************
+  498 00000030         ; disable interrupts
+  499 00000030         ; inputs:  none
+  500 00000030         ; outputs: none
+  501 00000030         DisableInterrupts
+  502 00000030 B672            CPSID            I
+  503 00000032 4770            BX               LR
+  504 00000034         
+  505 00000034         ;*********** EnableInterrupts ***************
+  506 00000034         ; disable interrupts
+  507 00000034         ; inputs:  none
+  508 00000034         ; outputs: none
+  509 00000034         EnableInterrupts
+  510 00000034 B662            CPSIE            I
+  511 00000036 4770            BX               LR
+  512 00000038         ;*******************************************************
+                       ***********************
+  513 00000038         ;
+  514 00000038         ; This is the end of the file.
+  515 00000038         ;
+  516 00000038         ;*******************************************************
+                       ***********************
+  517 00000038                 align            4
+  518 00000038         
+  519 00000038                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+ork --depend=.\startup.d -o.\startup.o -I.\RTE\_Target_1 -IC:\Keil_v5\ARM\PACK\
+Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil_v5\ARM\CMSIS\Include --pre
+define="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 523" --predefine="TM
+4C123GH6PM SETA 1" --list=.\startup.lst Startup.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stack_Mem 00000000
+
+Symbol: Stack_Mem
+   Definitions
+      At line 31 in file Startup.s
+   Uses
+      None
+Comment: Stack_Mem unused
+g_pulStack 00000000
+
+Symbol: g_pulStack
+   Definitions
+      At line 30 in file Startup.s
+   Uses
+      At line 49 in file Startup.s
+Comment: g_pulStack used once
+|.bss| 00000000
+
+Symbol: |.bss|
+   Definitions
+      At line 23 in file Startup.s
+   Uses
+      None
+Comment: |.bss| unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+HardFault_Handler 000002BE
+
+Symbol: HardFault_Handler
+   Definitions
+      At line 339 in file Startup.s
+   Uses
+      At line 52 in file Startup.s
+      At line 340 in file Startup.s
+
+NMI_Handler 000002BA
+
+Symbol: NMI_Handler
+   Definitions
+      At line 302 in file Startup.s
+   Uses
+      At line 51 in file Startup.s
+Comment: NMI_Handler used once
+ProcessorInit 0000026C
+
+Symbol: ProcessorInit
+   Definitions
+      At line 230 in file Startup.s
+   Uses
+      At line 229 in file Startup.s
+      At line 290 in file Startup.s
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 39 in file Startup.s
+   Uses
+      None
+Comment: RESET unused
+Reset_Handler 000002A2
+
+Symbol: Reset_Handler
+   Definitions
+      At line 273 in file Startup.s
+   Uses
+      At line 50 in file Startup.s
+      At line 272 in file Startup.s
+
+UART0_Handler 000002BC
+
+Symbol: UART0_Handler
+   Definitions
+      At line 333 in file Startup.s
+   Uses
+      At line 80 in file Startup.s
+      At line 334 in file Startup.s
+
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 49 in file Startup.s
+   Uses
+      At line 44 in file Startup.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 217 in file Startup.s
+
+__Vectors_End 0000026C
+
+Symbol: __Vectors_End
+   Definitions
+      At line 215 in file Startup.s
+   Uses
+      At line 45 in file Startup.s
+      At line 217 in file Startup.s
+
+copy_loop 00000276
+
+Symbol: copy_loop
+   Definitions
+      At line 239 in file Startup.s
+   Uses
+      At line 243 in file Startup.s
+Comment: copy_loop used once
+zero_loop 00000288
+
+Symbol: zero_loop
+   Definitions
+      At line 253 in file Startup.s
+   Uses
+      At line 256 in file Startup.s
+Comment: zero_loop used once
+10 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ALIGN 00000024
+
+Symbol: ALIGN
+   Definitions
+      At line 481 in file Startup.s
+   Uses
+      None
+Comment: ALIGN unused
+CallApplication 0000000C
+
+Symbol: CallApplication
+   Definitions
+      At line 400 in file Startup.s
+   Uses
+      None
+Comment: CallApplication unused
+Delay 00000024
+
+Symbol: Delay
+   Definitions
+      At line 486 in file Startup.s
+   Uses
+      At line 485 in file Startup.s
+      At line 488 in file Startup.s
+
+DisableInterrupts 00000030
+
+Symbol: DisableInterrupts
+   Definitions
+      At line 501 in file Startup.s
+   Uses
+      At line 482 in file Startup.s
+Comment: DisableInterrupts used once
+EnableInterrupts 00000034
+
+Symbol: EnableInterrupts
+   Definitions
+      At line 509 in file Startup.s
+   Uses
+      At line 483 in file Startup.s
+Comment: EnableInterrupts used once
+EnterBootLoader 00000008
+
+Symbol: EnterBootLoader
+   Definitions
+      At line 372 in file Startup.s
+   Uses
+      None
+Comment: EnterBootLoader unused
+IntDefaultHandler 00000022
+
+Symbol: IntDefaultHandler
+   Definitions
+      At line 469 in file Startup.s
+   Uses
+      At line 53 in file Startup.s
+      At line 54 in file Startup.s
+      At line 55 in file Startup.s
+      At line 60 in file Startup.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 61 in file Startup.s
+      At line 63 in file Startup.s
+      At line 68 in file Startup.s
+      At line 74 in file Startup.s
+      At line 76 in file Startup.s
+      At line 77 in file Startup.s
+      At line 78 in file Startup.s
+      At line 79 in file Startup.s
+      At line 81 in file Startup.s
+      At line 82 in file Startup.s
+      At line 83 in file Startup.s
+      At line 84 in file Startup.s
+      At line 85 in file Startup.s
+      At line 86 in file Startup.s
+      At line 87 in file Startup.s
+      At line 88 in file Startup.s
+      At line 89 in file Startup.s
+      At line 90 in file Startup.s
+      At line 91 in file Startup.s
+      At line 92 in file Startup.s
+      At line 93 in file Startup.s
+      At line 94 in file Startup.s
+      At line 95 in file Startup.s
+      At line 96 in file Startup.s
+      At line 97 in file Startup.s
+      At line 98 in file Startup.s
+      At line 99 in file Startup.s
+      At line 100 in file Startup.s
+      At line 101 in file Startup.s
+      At line 102 in file Startup.s
+      At line 103 in file Startup.s
+      At line 104 in file Startup.s
+      At line 105 in file Startup.s
+      At line 106 in file Startup.s
+      At line 107 in file Startup.s
+      At line 108 in file Startup.s
+      At line 109 in file Startup.s
+      At line 110 in file Startup.s
+      At line 111 in file Startup.s
+      At line 112 in file Startup.s
+      At line 113 in file Startup.s
+      At line 114 in file Startup.s
+      At line 115 in file Startup.s
+      At line 116 in file Startup.s
+      At line 118 in file Startup.s
+      At line 119 in file Startup.s
+      At line 120 in file Startup.s
+      At line 121 in file Startup.s
+      At line 122 in file Startup.s
+      At line 123 in file Startup.s
+      At line 124 in file Startup.s
+      At line 125 in file Startup.s
+      At line 126 in file Startup.s
+      At line 129 in file Startup.s
+      At line 130 in file Startup.s
+      At line 131 in file Startup.s
+      At line 132 in file Startup.s
+      At line 133 in file Startup.s
+      At line 134 in file Startup.s
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 135 in file Startup.s
+      At line 136 in file Startup.s
+      At line 137 in file Startup.s
+      At line 138 in file Startup.s
+      At line 143 in file Startup.s
+      At line 144 in file Startup.s
+      At line 145 in file Startup.s
+      At line 146 in file Startup.s
+      At line 167 in file Startup.s
+      At line 168 in file Startup.s
+      At line 169 in file Startup.s
+      At line 170 in file Startup.s
+      At line 171 in file Startup.s
+      At line 172 in file Startup.s
+      At line 173 in file Startup.s
+      At line 174 in file Startup.s
+      At line 175 in file Startup.s
+      At line 176 in file Startup.s
+      At line 177 in file Startup.s
+      At line 178 in file Startup.s
+      At line 179 in file Startup.s
+      At line 180 in file Startup.s
+      At line 181 in file Startup.s
+      At line 184 in file Startup.s
+      At line 185 in file Startup.s
+      At line 186 in file Startup.s
+      At line 187 in file Startup.s
+      At line 188 in file Startup.s
+      At line 191 in file Startup.s
+      At line 192 in file Startup.s
+      At line 193 in file Startup.s
+      At line 194 in file Startup.s
+      At line 195 in file Startup.s
+      At line 196 in file Startup.s
+      At line 197 in file Startup.s
+      At line 198 in file Startup.s
+      At line 199 in file Startup.s
+      At line 200 in file Startup.s
+      At line 201 in file Startup.s
+      At line 202 in file Startup.s
+      At line 203 in file Startup.s
+      At line 204 in file Startup.s
+      At line 205 in file Startup.s
+      At line 206 in file Startup.s
+      At line 207 in file Startup.s
+      At line 208 in file Startup.s
+      At line 209 in file Startup.s
+      At line 210 in file Startup.s
+      At line 211 in file Startup.s
+      At line 212 in file Startup.s
+      At line 213 in file Startup.s
+
+Reset_Handler_In_SRAM 00000000
+
+Symbol: Reset_Handler_In_SRAM
+   Definitions
+      At line 352 in file Startup.s
+   Uses
+      At line 295 in file Startup.s
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+Comment: Reset_Handler_In_SRAM used once
+StartApplication 0000000C
+
+Symbol: StartApplication
+   Definitions
+      At line 395 in file Startup.s
+   Uses
+      At line 394 in file Startup.s
+Comment: StartApplication used once
+SysCtlDelay 0000002A
+
+Symbol: SysCtlDelay
+   Definitions
+      At line 492 in file Startup.s
+   Uses
+      At line 484 in file Startup.s
+      At line 494 in file Startup.s
+
+|.text| 00000000
+
+Symbol: |.text|
+   Definitions
+      At line 350 in file Startup.s
+   Uses
+      None
+Comment: |.text| unused
+11 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+NVIC_VTABLE E000ED08
+
+Symbol: NVIC_VTABLE
+   Definitions
+      At line 6 in file Startup.s
+   Uses
+      At line 261 in file Startup.s
+      At line 262 in file Startup.s
+      At line 442 in file Startup.s
+      At line 443 in file Startup.s
+
+_APP_START_ADDRESS 00001000
+
+Symbol: _APP_START_ADDRESS
+   Definitions
+      At line 8 in file Startup.s
+   Uses
+      None
+Comment: _APP_START_ADDRESS unused
+_STACK_SIZE 00000040
+
+Symbol: _STACK_SIZE
+   Definitions
+      At line 16 in file Startup.s
+   Uses
+      At line 31 in file Startup.s
+      At line 49 in file Startup.s
+
+_VTABLE_START_ADDRESS 00001000
+
+Symbol: _VTABLE_START_ADDRESS
+   Definitions
+      At line 7 in file Startup.s
+   Uses
+      None
+Comment: _VTABLE_START_ADDRESS unused
+__Vectors_Size 0000026C
+
+Symbol: __Vectors_Size
+   Definitions
+      At line 217 in file Startup.s
+   Uses
+      At line 46 in file Startup.s
+Comment: __Vectors_Size used once
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+Bl_main 00000000
+
+Symbol: Bl_main
+   Definitions
+      At line 385 in file Startup.s
+   Uses
+      At line 386 in file Startup.s
+Comment: Bl_main used once
+CheckForceUpdate 00000000
+
+Symbol: CheckForceUpdate
+   Definitions
+      At line 365 in file Startup.s
+   Uses
+      At line 366 in file Startup.s
+Comment: CheckForceUpdate used once
+INIT_EEPROM 00000000
+
+Symbol: INIT_EEPROM
+   Definitions
+      At line 358 in file Startup.s
+   Uses
+      At line 359 in file Startup.s
+Comment: INIT_EEPROM used once
+|Image$$SRAM$$ZI$$Base| 00000000
+
+Symbol: |Image$$SRAM$$ZI$$Base|
+   Definitions
+      At line 237 in file Startup.s
+      At line 248 in file Startup.s
+   Uses
+      At line 238 in file Startup.s
+      At line 249 in file Startup.s
+Warning: |Image$$SRAM$$ZI$$Base| multiply defined
+|Image$$SRAM$$ZI$$Limit| 00000000
+
+Symbol: |Image$$SRAM$$ZI$$Limit|
+   Definitions
+      At line 251 in file Startup.s
+   Uses
+      At line 252 in file Startup.s
+Comment: |Image$$SRAM$$ZI$$Limit| used once
+5 symbols
+383 symbols in table
